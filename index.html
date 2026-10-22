@@ -85,7 +85,8 @@ main,header,footer{position:relative;z-index:1}
 /* ---- Header ---------------------------------------------------------------- */
 header{padding-block:2.5rem 1rem;text-align:center}
 .brand{width:min(46rem,100%);margin-inline:auto}
-.flutter{width:min(130px,22vw);margin:0 auto -.4rem;opacity:.9;display:block;
+/* Butterfly: lower-left wing (11.5% in from the image edge) lines up with the start of the "u" in Thought (39.4% across the wordmark) */
+.flutter{--bw:min(150px,28vw);width:var(--bw);margin:0 0 -.4rem calc(39.4% - var(--bw) * .115 + 3px);opacity:.9;display:block;
   /* WHY gentle float: the butterfly is the brand mark; slow motion reads as alive, not busy */
   animation:float 6s ease-in-out infinite}
 @keyframes float{50%{transform:translateY(-8px) rotate(-2deg)}}
@@ -1177,7 +1178,7 @@ footer{background:var(--night);color:#BDB3E6;padding-block:1rem 3rem;border-top:
 
   <section class="wrap" aria-labelledby="book" style="position:relative">
     <svg class="note" style="top:1rem;right:4%;--c:var(--teal)" aria-hidden="true"><use href="#n2"/></svg>
-    <svg class="note" style="bottom:2rem;left:-.5rem;--c:var(--gold)" aria-hidden="true"><use href="#n1"/></svg>
+    <svg class="note" style="bottom:.5rem;left:1.5rem;--c:var(--gold)" aria-hidden="true"><use href="#n1"/></svg>
     <div class="book">
       <figure>
         <span class="badge">Coming soon</span>
