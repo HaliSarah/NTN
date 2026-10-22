@@ -84,7 +84,8 @@ main,header,footer{position:relative;z-index:1}
 
 /* ---- Header ---------------------------------------------------------------- */
 header{padding-block:2.5rem 1rem;text-align:center}
-.flutter{width:min(150px,38vw);margin:0 auto -1.5rem;opacity:.9;display:block;
+.brand{width:min(46rem,100%);margin-inline:auto}
+.flutter{width:min(130px,22vw);margin:0 0 -.4rem 33.9%;opacity:.9;display:block;
   /* WHY gentle float: the butterfly is the brand mark; slow motion reads as alive, not busy */
   animation:float 6s ease-in-out infinite}
 @keyframes float{50%{transform:translateY(-8px) rotate(-2deg)}}
@@ -171,6 +172,13 @@ footer{background:var(--night);color:#BDB3E6;padding-block:1rem 3rem;border-top:
 .cstatus{grid-column:1/-1;margin:0;min-height:1.4em;font-weight:600}
 .cstatus.ok{color:#A8E0C0}.cstatus.err{color:#FFB8C8}
 @media (max-width:760px){.contact,.cform{grid-template-columns:1fr}}
+/* WHY: same mint (Businesses card) and pink (Story time card) as the contact page,
+   so both dark bands match. */
+:root{--card-mint:#DBF1E4;--card-blush:#FBE1EA}
+.band .eyebrow{color:var(--card-mint)}
+.band .btn.solid{background:var(--card-mint);border-color:var(--card-mint);color:var(--night)}
+.band .btn:focus-visible{outline-color:var(--card-mint)}
+.band p,.aud ul,footer,footer small{color:var(--card-blush)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
@@ -245,6 +253,7 @@ footer{background:var(--night);color:#BDB3E6;padding-block:1rem 3rem;border-top:
 </div>
 
 <header class="wrap">
+  <div class="brand">
   <img class="flutter" src="Assets/butterfly.png" alt="">
   <h1 style="margin:0"><span class="sr-only">New Thought Nursery: Conscious Rhymes for Little Minds</span>
     <svg class="wordmark" viewBox="70 252 660 102" role="img" aria-label="New Thought Nursery — Conscious Rhymes for Little Minds"><g>
@@ -1143,6 +1152,7 @@ footer{background:var(--night);color:#BDB3E6;padding-block:1rem 3rem;border-top:
 	C655.52,345.953,653.508,346.109,651.553,346.821z"/>
 </svg>
   </h1>
+  </div>
   <p class="tagline">What they sing, they bring —<br>what they hum, they become…</p>
   <p class="lede">Classic songs re-written with safe scenarios, and new, original compositions for babies, toddlers and the grown-ups who sing along.</p>
   <div class="btns">
