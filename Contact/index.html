@@ -82,7 +82,8 @@ main,header,footer{position:relative;z-index:1}
 
 /* ---- Header ---------------------------------------------------------------- */
 header{padding-block:2.5rem 1rem;text-align:center}
-.flutter{width:min(130px,22vw);margin:0 auto -.4rem;opacity:.9;display:block;
+/* Butterfly: lower-left wing (11.5% in from the image edge) lines up with the start of the "u" in Thought (39.4% across the wordmark) */
+.flutter{--bw:min(150px,28vw);width:var(--bw);margin:0 0 -.4rem calc(39.4% - var(--bw) * .115 + 3px);opacity:.9;display:block;
   /* WHY gentle float: the butterfly is the brand mark; slow motion reads as alive, not busy */
   animation:float 6s ease-in-out infinite}
 @keyframes float{50%{transform:translateY(-8px) rotate(-2deg)}}
@@ -246,7 +247,7 @@ footer{background:var(--night);color:#BDB3E6;padding-block:1rem 3rem;border-top:
 /* Contact page: compact header up top, form band carries the weight at the bottom. */
 .chead{padding-block:2rem .5rem;text-align:center}
 .chead a.mark{display:block;width:min(30rem,100%);margin-inline:auto;text-decoration:none}
-.chead .flutter{width:min(90px,24vw);margin-bottom:-.15rem}
+.chead .flutter{--bw:min(100px,24vw);margin-bottom:-.15rem}
 .chead .wordmark{width:min(30rem,100%)}
 .home-link{display:inline-block;margin-top:1rem;font-weight:700;color:var(--ink)}
 .home-link:focus-visible,.chead a.mark:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
