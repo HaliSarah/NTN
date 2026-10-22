@@ -278,7 +278,7 @@ textarea.inp{resize:vertical;min-height:200px;line-height:1.7;}
         </div>
         <div class="builder-field">
           <div class="lbl">URL</div>
-          <input type="url" class="inp" id="linkUrl" placeholder="https://childrens.iqproductionswithaz.com" style="padding:9px 12px;font-size:13px;">
+          <input type="url" class="inp" id="linkUrl" placeholder="https://childrens.iqproductionz.com" style="padding:9px 12px;font-size:13px;">
         </div>
         <button class="builder-add" onclick="insertHyperlink()">+ Insert Link</button>
       </div>
@@ -293,7 +293,7 @@ textarea.inp{resize:vertical;min-height:200px;line-height:1.7;}
         </div>
         <div class="builder-field">
           <div class="lbl">Button URL</div>
-          <input type="url" class="inp" id="btnUrl" placeholder="https://childrens.iqproductionswithaz.com" style="padding:9px 12px;font-size:13px;">
+          <input type="url" class="inp" id="btnUrl" placeholder="https://childrens.iqproductionz.com" style="padding:9px 12px;font-size:13px;">
         </div>
         <button class="builder-add" onclick="insertButton()">+ Add to Message</button>
       </div>
@@ -304,12 +304,13 @@ textarea.inp{resize:vertical;min-height:200px;line-height:1.7;}
     <label class="lbl">Attachment <span style="font-weight:300;font-size:.8rem;color:var(--muted);">(optional)</span></label>
     <label class="attach-label" for="attachFile">
       <span class="attach-icon">📎</span>
-      <span id="attachFileName">Choose file to attach…</span>
+      <span id="attachFileName">Choose file to attach (songs, PDFs, images)…</span>
       <input type="file" id="attachFile" name="my_file"
-             accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.txt,.csv,.xls,.xlsx,.ppt,.pptx"
+             accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.txt,.csv,.xls,.xlsx,.ppt,.pptx,.wav,.mp3,.m4a,.aac,.flac,.ogg,audio/*"
              onchange="updateAttachName(this)" style="display:none;">
     </label>
     <button type="button" class="attach-clear" id="attachClear" onclick="clearAttach()" style="display:none;">✕ Remove</button>
+    <div class="hint" id="attachWarn" hidden></div>
   </div>
 
   <div class="btn-row">
@@ -407,14 +408,14 @@ textarea.inp{resize:vertical;min-height:200px;line-height:1.7;}
     </div>
     <div class="row-2">
       <div class="field"><label class="lbl">Phone (optional)</label><input type="text" class="inp" id="sigPhone" placeholder="(555) 000-0000"></div>
-      <div class="field"><label class="lbl">Website</label><input type="text" class="inp" id="sigWeb" value="childrens.iqproductionswithaz.com"></div>
+      <div class="field"><label class="lbl">Website</label><input type="text" class="inp" id="sigWeb" value="childrens.iqproductionz.com"></div>
     </div>
     <div class="field"><label class="lbl">Tagline / Sign-off line (optional)</label><input type="text" class="inp" id="sigTagline" placeholder="e.g. What they sing, they bring."></div>
     <button class="btn btn-gold" style="margin-top:16px;width:auto;padding:11px 28px;" onclick="updateSigPreview()">Update Preview</button>
     <div class="sig-preview" id="sigPreview" style="margin-top:16px;">
       <div class="sig-name">Starrah Hazely Parsons</div>
       <div class="sig-title">Songwriter &amp; Creator</div>
-      <div class="sig-link">childrens.iqproductionswithaz.com</div>
+      <div class="sig-link">childrens.iqproductionz.com</div>
       <div style="margin-top:4px;font-size:11px;color:var(--muted);">New Thought Nursery · Conscious Rhymes for Little Minds</div>
     </div>
   </div>
@@ -628,7 +629,7 @@ function buildEmailHtml(clientName, rawContent){
   const sigName    = document.getElementById('sigName').value || 'Starrah Hazely Parsons';
   const sigTitle   = document.getElementById('sigTitle').value || 'Songwriter & Creator';
   const sigPhone   = document.getElementById('sigPhone').value || '';
-  const sigWeb     = document.getElementById('sigWeb').value || 'childrens.iqproductionswithaz.com';
+  const sigWeb     = document.getElementById('sigWeb').value || 'childrens.iqproductionz.com';
   const sigTagline = document.getElementById('sigTagline').value || '';
   const consultantEmail = document.getElementById('consultantEmail').value || 'newthoughtnursery@gmail.com';
 
@@ -690,7 +691,7 @@ body{margin:0;padding:0;background:#F4EEFB;font-family:'Nunito',Arial,sans-serif
 <body><div style="padding:20px 16px;background:#F4EEFB;">
 <div class="wrap">
 <div class="email-hdr">
-  <img src="https://childrens.iqproductionswithaz.com/Assets/butterfly.png" alt="" style="height:64px;width:auto;display:block;margin:0 auto 6px;"><img src="https://childrens.iqproductionswithaz.com/Assets/wordmark.png" alt="New Thought Nursery — Conscious Rhymes for Little Minds" style="width:100%;max-width:420px;height:auto;display:block;margin:0 auto;">
+  <img src="https://childrens.iqproductionz.com/Assets/butterfly.png" alt="" style="height:64px;width:auto;display:block;margin:0 auto 6px;"><img src="https://childrens.iqproductionz.com/Assets/wordmark.png" alt="New Thought Nursery — Conscious Rhymes for Little Minds" style="width:100%;max-width:420px;height:auto;display:block;margin:0 auto;">
 </div>
 <div class="email-body">
   ${greetingLine(clientName) ? `<p class="greeting">${escHtml(greetingLine(clientName))}</p>
@@ -705,7 +706,7 @@ body{margin:0;padding:0;background:#F4EEFB;font-family:'Nunito',Arial,sans-serif
     ${sigTagline?`<div style="font-size:12px;color:#8A82B8;font-style:italic;margin-top:4px;">${sigTagline}</div>`:''}
   </div>
 </div>
-<div class="email-ftr"><div style="font-family:'Dancing Script',cursive;font-size:18px;color:#1F8584;letter-spacing:0;margin-bottom:6px;">What they sing, they bring — what they hum, they become…</div>New Thought Nursery &bull; <a href="https://childrens.iqproductionswithaz.com" style="color:#C2578A;text-decoration:none;">childrens.iqproductionswithaz.com</a> &bull; <a href="https://www.youtube.com/@NewThoughtNursery" style="color:#C2578A;text-decoration:none;">YouTube</a> &bull; <a href="mailto:${consultantEmail}" style="color:#C2578A;text-decoration:none;">${consultantEmail}</a></div>
+<div class="email-ftr"><div style="font-family:'Dancing Script',cursive;font-size:18px;color:#1F8584;letter-spacing:0;margin-bottom:6px;">What they sing, they bring — what they hum, they become…</div>New Thought Nursery &bull; <a href="https://childrens.iqproductionz.com" style="color:#C2578A;text-decoration:none;">childrens.iqproductionz.com</a> &bull; <a href="https://www.youtube.com/@NewThoughtNursery" style="color:#C2578A;text-decoration:none;">YouTube</a> &bull; <a href="mailto:${consultantEmail}" style="color:#C2578A;text-decoration:none;">${consultantEmail}</a></div>
 </div></div></body></html>`;
 }
 
@@ -796,7 +797,11 @@ async function sendEmail(mode){
     showStatus('ok', msg);
   } catch(e){
     console.error(e);
-    showStatus('err','Send failed: ' + (e.text||e.message||JSON.stringify(e)));
+    const why = (e.text||e.message||JSON.stringify(e));
+    const tooBig = e.status === 413 || /size|large|limit/i.test(why);
+    showStatus('err', tooBig
+      ? 'Send failed: the attachment is too large for your EmailJS plan. Try an MP3 or a Google Drive link instead.'
+      : 'Send failed: ' + why);
   }
 
   btn.textContent = mode==='test' ? 'Send Test to Me' : 'Send →';
@@ -810,21 +815,37 @@ function showStatus(type, msg){
   el.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
+// WHY a size limit: EmailJS caps attachment size per plan, and WAV files are large
+// (about 10 MB per minute). Set this to your EmailJS plan's attachment limit.
+const MAX_ATTACH_MB = 0.05;  // free plan: 50 KB per send
+
+// Shows the chosen file name and size, and warns before sending when it's too big.
+// WHY warn here instead of at send: you learn right away and can switch to a share link.
 function updateAttachName(input) {
   var label = document.getElementById('attachFileName');
-  var clear  = document.getElementById('attachClear');
+  var clear = document.getElementById('attachClear');
+  var warn  = document.getElementById('attachWarn');
   if (input.files && input.files.length) {
-    label.textContent = input.files[0].name;
+    var f  = input.files[0];
+    var mb = f.size / 1048576;
+    label.textContent = f.name + ' (' + (mb < 1 ? Math.max(1, Math.round(f.size/1024)) + ' KB' : mb.toFixed(1) + ' MB') + ')';
     clear.style.display = 'inline-block';
+    if (mb > MAX_ATTACH_MB) {
+      warn.hidden = false;
+      var lim = MAX_ATTACH_MB < 1 ? Math.round(MAX_ATTACH_MB*1000) + ' KB' : MAX_ATTACH_MB + ' MB';
+      warn.textContent = 'This file is over ' + lim + ' and will likely be rejected. For full songs, export an MP3, or upload to Google Drive and add the link with the Hyperlink Builder.';
+    } else { warn.hidden = true; }
   } else {
-    label.textContent = 'Choose file to attach…';
+    label.textContent = 'Choose file to attach (songs, PDFs, images)…';
     clear.style.display = 'none';
+    warn.hidden = true;
   }
 }
 function clearAttach() {
   var input = document.getElementById('attachFile');
   input.value = '';
-  document.getElementById('attachFileName').textContent = 'Choose file to attach…';
+  document.getElementById('attachFileName').textContent = 'Choose file to attach (songs, PDFs, images)…';
+  document.getElementById('attachWarn').hidden = true;
   document.getElementById('attachClear').style.display = 'none';
 }
 
