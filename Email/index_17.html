@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<!--
+  Title:       NTN Email Studio — New Thought Nursery Branded Email Sender
+  Author:      Hali Sarah Parsons
+  Date:        2026-10-22
+  Modified By: Claude (Anthropic)
+  Description: Private tool for sending branded New Thought Nursery emails via EmailJS
+               (same service as the I.Q. Productionz sender). Rebranded to the watercolor
+               nursery palette with outreach templates for daycares, libraries and partners.
+               Kept out of search engines on purpose (noindex) and not linked from the public site.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NTN Email Studio</title>
+  <meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito:wght@300;400;600;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  // WHY a constant + init right away: the key must exist even if you click Send before the
+  // page finishes loading. Each send also passes it, so it can never be missing.
+  const EJS_PUBLIC_KEY = '3vNjQbWmqzzOO6IK-';
+  if(window.emailjs) emailjs.init({ publicKey: EJS_PUBLIC_KEY });
+</script>
+<style>
+:root {
+  --bg:      #FDFBF6;
+  --surface: #FFFFFF;
+  --card:    #FFFFFF;
+  --border:  #E4DDF2;
+  --gold:    #2E2466;
+  --gold-lt: #C2578A;
+  --gold-dim:#8A82B8;
+  --white:   #2E2466;
+  --muted:   #6E6896;
+  --success: #4a8c62;
+  --danger:  #c0392b;
+  --radius:  8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--white);min-height:100vh;padding-bottom:60px;}
+
+/* HEADER */
+.hdr {
+  background:linear-gradient(160deg,#E6F4FA 0%,#FBEAF1 55%,#EAF6EE 100%);
+  border-bottom:1px solid var(--border);
+  padding:40px 32px 32px; text-align:center; position:relative; overflow:hidden;
+}
+.hdr::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(46,36,102,0.13) 0%,transparent 70%);
+  pointer-events:none;
+}
+.logo-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;margin-bottom:20px;}
+.logo-wrap img{height:56px;width:auto;filter:drop-shadow(0 0 12px rgba(46,36,102,0.45));}
+.brand-name{font-family:'Fraunces',Georgia,serif;font-size:20px;font-weight:700;color:var(--gold);letter-spacing:2px;line-height:1;}
+.brand-sub{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+.gold-rule{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:16px auto;}
+.hdr h1{font-family:'Fraunces',Georgia,serif;font-size:clamp(18px,3.5vw,28px);font-weight:600;color:var(--white);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+.hdr p{font-size:13px;color:var(--muted);max-width:440px;margin:0 auto;line-height:1.7;font-weight:300;}
+
+/* TABS */
+.tab-bar{display:flex;border-bottom:1px solid var(--border);background:var(--surface);max-width:760px;margin:0 auto;}
+.tab{flex:1;padding:14px 10px;text-align:center;font-family:'Fraunces',Georgia,serif;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;}
+.tab:hover{color:var(--white);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* BODY */
+.page-body{max-width:760px;margin:0 auto;padding:32px 24px 0;}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-bottom:18px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.card h2{font-family:'Fraunces',Georgia,serif;font-size:14px;font-weight:600;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px;}
+
+/* NOTE BOX */
+.note{background:#F4EEFB;border-left:3px solid var(--gold);padding:14px 18px;border-radius:var(--radius);font-size:12px;color:var(--white);line-height:1.9;margin-bottom:20px;}
+.note code{background:rgba(46,36,102,0.2);color:var(--gold-lt);padding:2px 6px;border-radius:4px;font-size:11px;}
+.note strong{color:var(--gold);}
+
+/* FIELDS */
+.field{margin-bottom:16px;}
+.field:last-child{margin-bottom:0;}
+.lbl{font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:7px;font-weight:600;}
+.inp{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:var(--radius);font-family:'Nunito',system-ui,sans-serif;font-size:14px;color:var(--white);background:var(--bg);outline:none;transition:border 0.2s,box-shadow 0.2s;appearance:none;}
+.inp::placeholder{color:var(--muted);}
+.inp:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(46,36,102,0.15);}
+textarea.inp{resize:vertical;min-height:200px;line-height:1.7;}
+.hint{font-size:11px;color:var(--muted);margin-top:5px;font-style:italic;line-height:1.6;}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+/* BUILDER BOXES */
+.builder-box{background:#F4EEFB;border:1px dashed var(--border);border-radius:var(--radius);padding:16px 18px;margin-top:10px;}
+.builder-box .builder-title{font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;font-weight:600;}
+.builder-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;}
+.builder-field{flex:1;min-width:120px;}
+.builder-field .lbl{font-size:9px;margin-bottom:5px;}
+.builder-add{background:var(--gold);color:#FDFBF6;border:none;padding:10px 18px;border-radius:var(--radius);font-family:'Nunito',system-ui,sans-serif;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all 0.2s;}
+.builder-add:hover{background:var(--gold-lt);}
+
+/* BUTTONS */
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;}
+.btn-row .btn{flex:1;min-width:140px;}
+.btn{padding:13px 20px;border:none;border-radius:var(--radius);font-family:'Fraunces',Georgia,serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#4A3D96);color:#FDFBF6;box-shadow:0 4px 14px rgba(46,36,102,0.3);}
+.btn-gold:hover{background:linear-gradient(135deg,var(--gold-lt),var(--gold));box-shadow:0 4px 22px rgba(46,36,102,0.45);}
+.btn-gold:disabled{opacity:.5;cursor:not-allowed;box-shadow:none;}
+.btn-outline{background:transparent;color:var(--gold);border:1px solid var(--gold);}
+.btn-outline:hover{background:rgba(46,36,102,0.1);}
+.btn-test{background:linear-gradient(135deg,#ECE6F7,#E0D8F2);color:var(--white);border:1px solid var(--border);}
+.btn-test:hover{background:linear-gradient(135deg,#E0D8F2,#D4CAEE);}
+.btn-test:disabled{opacity:.5;cursor:not-allowed;}
+
+/* STATUS */
+.status{font-size:13px;margin-top:14px;padding:12px 16px;border-radius:var(--radius);display:none;text-align:center;font-weight:500;}
+.status.ok{background:#E2F5E9;color:#2C6B47;border:1px solid rgba(74,140,98,0.4);display:block;}
+.status.err{background:#FDECEA;color:#A5332A;border:1px solid rgba(192,57,43,0.3);display:block;}
+
+
+
+/* GREETING PICKER */
+.greet-row{display:flex;gap:10px;flex-wrap:wrap;}
+.greet-row .inp{flex:1;min-width:160px;}
+.greet-preview{font-family:'Fraunces',Georgia,serif;font-size:15px;color:var(--white);margin-top:8px;}
+.greet-preview span{font-family:'Nunito',system-ui,sans-serif;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-right:8px;}
+
+/* FORMAT TOOLBAR */
+.fmt-note{background:#F4EEFB;border-left:3px solid var(--gold);border-radius:var(--radius);padding:10px 14px;font-size:12px;line-height:1.7;color:var(--white);margin-bottom:8px;}
+.fmt-note strong{color:var(--gold);}
+.fmt-flash{font-size:12px;color:var(--gold-lt);min-height:18px;margin-top:6px;}
+
+.fmt-bar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px;}
+.fmt-btn{background:var(--bg);color:var(--white);border:1px solid var(--border);border-radius:6px;padding:7px 12px;font-family:'Nunito',system-ui,sans-serif;font-size:13px;cursor:pointer;min-width:38px;transition:all .2s;}
+.fmt-btn:hover{border-color:var(--gold);color:var(--gold-lt);}
+.fmt-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.fmt-tip{font-size:11px;color:var(--muted);font-style:italic;margin-left:6px;}
+
+/* PREVIEW */
+#preview-frame{width:100%;height:620px;border:1px solid var(--border);border-radius:var(--radius);margin-top:14px;display:none;background:white;}
+
+/* TABS CONTENT */
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* DIVIDER */
+.divider{border:none;border-top:1px solid var(--border);margin:20px 0;}
+
+/* SIGNATURE PREVIEW */
+.sig-preview{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-top:10px;font-size:13px;line-height:2;}
+.sig-preview .sig-name{font-family:'Fraunces',Georgia,serif;font-size:16px;color:var(--gold);font-weight:600;}
+.sig-preview .sig-title{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}
+.sig-preview .sig-link{color:var(--gold);font-size:11px;}
+
+@media(max-width:540px){
+  .hdr{padding:28px 18px 24px;}
+  .card{padding:20px 16px;}
+  .row-2{grid-template-columns:1fr;}
+  .btn-row{flex-direction:column;}
+  .tab{font-size:9px;padding:12px 6px;}
+}
+
+  /* ATTACHMENT INPUT */
+  .attach-label {
+    display:flex; align-items:center; gap:10px; cursor:pointer;
+    border:1.5px dashed var(--gold-dim); border-radius:8px;
+    padding:10px 14px; font-size:.9rem; color:var(--gold);
+    background:rgba(46,36,102,0.05); transition:all .2s;
+    user-select:none;
+  }
+  .attach-label:hover { border-color:var(--gold); background:rgba(46,36,102,0.1); }
+  .attach-icon { font-size:1.2rem; }
+  .attach-clear {
+    display:inline-block; margin-top:6px; padding:4px 10px;
+    background:none; border:1px solid #c0392b; border-radius:4px;
+    color:#c0392b; font-size:.78rem; cursor:pointer; transition:all .2s;
+  }
+  .attach-clear:hover { background:#c0392b; color:#fff; }
+
+</style>
+</head>
+<body>
+<div style="background:#FFFFFF;border-bottom:1px solid #E4DDF2;padding:10px 18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:1000;">
+  <span style="font-family:'Fraunces',Georgia,serif;font-size:10px;letter-spacing:2px;color:#6E6896;text-transform:uppercase;"><strong style="color:#2E2466;">Private</strong> · New Thought Nursery Email</span>
+  <a href="../" style="font-family:'Fraunces',Georgia,serif;padding:7px 16px;border:1px solid #8A82B8;border-radius:6px;color:#C2578A;font-size:10px;letter-spacing:1.5px;text-decoration:none;text-transform:uppercase;">↩ Site Home</a>
+</div>
+
+<div class="hdr">
+  <div class="logo-wrap">
+    <div style="width:min(420px,80vw);text-align:left"><img src="../Assets/butterfly.png" alt="" style="height:56px;display:block;margin:0 auto 4px"><img src="../Assets/wordmark.png" alt="New Thought Nursery" style="height:auto;width:100%;display:block"></div>
+  </div>
+  <div class="gold-rule"></div>
+  <h1>NTN Email Studio</h1>
+  <p>Send New Thought Nursery emails to daycares, libraries, partners and families — all in the nursery brand.</p>
+</div>
+
+<div style="background:var(--surface);border-bottom:1px solid var(--border);">
+  <div class="tab-bar">
+    <div class="tab active" onclick="switchTab('compose')">✦ Compose</div>
+    <div class="tab" onclick="switchTab('outreach')">📡 Outreach</div>
+    <div class="tab" onclick="switchTab('followup')">🔁 Follow-Up</div>
+    <div class="tab" onclick="switchTab('settings')">⚙ Signature</div>
+  </div>
+</div>
+
+<div class="page-body">
+
+<div class="tab-panel active" id="tab-compose">
+
+  <div class="card">
+    <h2>Send Settings</h2>
+    <div class="field">
+      <label class="lbl">Your Email (CC copy to you)</label>
+      <input type="email" class="inp" id="consultantEmail" value="newthoughtnursery@gmail.com" placeholder="your@email.com">
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Recipient</h2>
+    <div class="row-2">
+      <div class="field">
+        <label class="lbl">Recipient Email *</label>
+        <input type="email" class="inp" id="clientEmail" placeholder="director@daycare.com">
+      </div>
+      <div class="field">
+        <label class="lbl">First Name *</label>
+        <input type="text" class="inp" id="clientName" placeholder="e.g. Ms. Lopez">
+      </div>
+    </div>
+    <div class="field">
+      <label class="lbl" for="greetingSelect">Greeting</label>
+      <div class="greet-row">
+        <select class="inp" id="greetingSelect">
+          <option value="Salutations" selected>Salutations (default)</option>
+          <option value="Dear">Dear</option>
+          <option value="Hi">Hi</option>
+          <option value="Hello">Hello</option>
+          <option value="Hey">Hey</option>
+          <option value="Good morning">Good morning</option>
+          <option value="Good afternoon">Good afternoon</option>
+          <option value="Good evening">Good evening</option>
+          <option value="Greetings">Greetings</option>
+          <option value="Congratulations">Congratulations</option>
+          <option value="__custom">Custom…</option>
+          <option value="__none">No greeting</option>
+        </select>
+        <input type="text" class="inp" id="greetingCustom" placeholder="Type your greeting, e.g. Welcome aboard" hidden>
+      </div>
+      <div class="greet-preview" id="greetingPreview"><span>Opens with</span>Salutations,</div>
+    </div>
+    <div class="field">
+      <label class="lbl">Subject Line *</label>
+      <input type="text" class="inp" id="emailSubject" value="Songs for Your Classroom — New Thought Nursery">
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Message Body</h2>
+    <div class="field">
+      <div class="fmt-note"><strong>How to format:</strong> highlight the text you want to change, then click <b>B</b>, <i>I</i>, • List or 1. List. For a list, highlight every line that belongs in it; each line becomes one item.</div>
+      <div class="fmt-bar" role="toolbar" aria-label="Text formatting">
+        <button type="button" class="fmt-btn" onmousedown="event.preventDefault()" onclick="wrapSelection('b')" title="Bold (Ctrl/Cmd+B)"><b>B</b></button>
+        <button type="button" class="fmt-btn" onmousedown="event.preventDefault()" onclick="wrapSelection('i')" title="Italic (Ctrl/Cmd+I)"><i>I</i></button>
+        <button type="button" class="fmt-btn" onmousedown="event.preventDefault()" onclick="makeList('ul')" title="Bulleted list">• List</button>
+        <button type="button" class="fmt-btn" onmousedown="event.preventDefault()" onclick="makeList('ol')" title="Numbered list">1. List</button>
+      </div>
+      <textarea class="inp" id="messageBody" placeholder="Type your message here. Plain text or basic HTML both work.&#10;&#10;Line breaks are preserved automatically.&#10;&#10;Use #BUTTON on its own line to insert a call-to-action button.&#10;&#10;Example:&#10;Here's our newest song for circle time..."></textarea>
+      <div class="hint">Plain text is fine — line breaks are kept automatically. Use the toolbar above for bold, italic and lists, or type basic HTML yourself.</div>
+      <div class="fmt-flash" id="fmtFlash" aria-live="polite"></div>
+    </div>
+
+    <div class="builder-box">
+      <div class="builder-title">🔗 Hyperlink Builder — inserts a link at your cursor</div>
+      <div class="builder-row">
+        <div class="builder-field">
+          <div class="lbl">Link Text (what they see)</div>
+          <input type="text" class="inp" id="linkText" placeholder="e.g. Listen to the Playlist" style="padding:9px 12px;font-size:13px;">
+        </div>
+        <div class="builder-field">
+          <div class="lbl">URL</div>
+          <input type="url" class="inp" id="linkUrl" placeholder="https://childrens.iqproductionz.com" style="padding:9px 12px;font-size:13px;">
+        </div>
+        <button class="builder-add" onclick="insertHyperlink()">+ Insert Link</button>
+      </div>
+    </div>
+
+    <div class="builder-box" style="margin-top:10px;">
+      <div class="builder-title">🟡 Button Builder — inserts a #BUTTON into your message</div>
+      <div class="builder-row">
+        <div class="builder-field">
+          <div class="lbl">Button Text</div>
+          <input type="text" class="inp" id="btnText" placeholder="e.g. Play the Music" style="padding:9px 12px;font-size:13px;">
+        </div>
+        <div class="builder-field">
+          <div class="lbl">Button URL</div>
+          <input type="url" class="inp" id="btnUrl" placeholder="https://childrens.iqproductionz.com" style="padding:9px 12px;font-size:13px;">
+        </div>
+        <button class="builder-add" onclick="insertButton()">+ Add to Message</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="field" style="margin-bottom:12px;">
+    <label class="lbl">Attachment <span style="font-weight:300;font-size:.8rem;color:var(--muted);">(optional)</span></label>
+    <label class="attach-label" for="attachFile">
+      <span class="attach-icon">📎</span>
+      <span id="attachFileName">Choose file to attach (songs, PDFs, images)…</span>
+      <input type="file" id="attachFile" name="my_file"
+             accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.txt,.csv,.xls,.xlsx,.ppt,.pptx,.wav,.mp3,.m4a,.aac,.flac,.ogg,audio/*"
+             onchange="updateAttachName(this)" style="display:none;">
+    </label>
+    <button type="button" class="attach-clear" id="attachClear" onclick="clearAttach()" style="display:none;">✕ Remove</button>
+    <div class="hint" id="attachWarn" hidden></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="previewEmail()">Preview in Window</button>
+    <button class="btn btn-test" id="testBtn" onclick="sendEmail('test')">Send Test to Me</button>
+    <button class="btn btn-gold" id="sendBtn" onclick="sendEmail('client')">Send →</button>
+  </div>
+  <div id="statusMsg" class="status"></div>
+  <iframe id="preview-frame"></iframe>
+</div>
+
+<div class="tab-panel" id="tab-outreach">
+  <div class="note">
+    <strong>Outreach Templates</strong> — click any template to load it into Compose, then fill in the [brackets] before sending.
+  </div>
+  <div class="card" style="cursor:pointer;" onclick="loadTemplate('daycare-intro')">
+    <h2>🏫 Daycare / Preschool Introduction</h2>
+    <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-top:8px;">First email to a center director. Short, warm, and points straight to the music.</p>
+    <div style="margin-top:14px;padding:14px;background:var(--bg);border-radius:var(--radius);font-size:13px;line-height:1.8;color:var(--white);">
+      Subject: Free Songs for Circle Time — New Thought Nursery<br><br>I&#x27;m the songwriter behind New Thought Nursery, a collection of children&#x27;s songs for little minds. We take the classic nursery tunes kids already know and rewrite them with safe, gentle scenarios, plus new original songs.<br><br>They work well for circle time, transitions and nap time. Your teachers can stream the full playlist free on YouTube:<br><strong>[Button: Play the Playlist]</strong><br><br>I&#x27;d love to hear which songs your little ones like best. Would it be okay if I sent you new releases as they come out?
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--gold);letter-spacing:1px;">→ Click to load into Compose</div>
+  </div>
+  <div class="card" style="cursor:pointer;" onclick="loadTemplate('library')">
+    <h2>📚 Library / Story Time Pitch</h2>
+    <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-top:8px;">For children&#x27;s librarians and bookstore story-time hosts. Pairs the songs with the upcoming book.</p>
+    <div style="margin-top:14px;padding:14px;background:var(--bg);border-radius:var(--radius);font-size:13px;line-height:1.8;color:var(--white);">
+      Subject: A Sing-Along Story Time Idea — Row Row Ocean<br><br>I write children&#x27;s music as New Thought Nursery, and my first picture book, Row Row Ocean, is coming soon. It&#x27;s a song you can read: a little rowboat drifting past coral islands and glowing jellyfish under the stars.<br><br>I&#x27;d love to offer a sing-along story time at [Library / Store Name]. It runs about [length], works for ages [age range], and everything is gentle and calm.<br><br>You can hear the music here:<br><strong>[Button: Listen to New Thought Nursery]</strong><br><br>Would a date in [month] work for your schedule?
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--gold);letter-spacing:1px;">→ Click to load into Compose</div>
+  </div>
+  <div class="card" style="cursor:pointer;" onclick="loadTemplate('licensing')">
+    <h2>🎵 Public Performance / Licensing</h2>
+    <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-top:8px;">For businesses that play music for the public (play cafés, gyms, children&#x27;s venues).</p>
+    <div style="margin-top:14px;padding:14px;background:var(--bg);border-radius:var(--radius);font-size:13px;line-height:1.8;color:var(--white);">
+      Subject: Playing New Thought Nursery at [Business Name]<br><br>Thank you for your interest in playing New Thought Nursery for your families!<br><br>My songs are registered with BMI, so businesses that already hold a BMI public-performance license are generally covered. If you&#x27;re not sure whether you have one, BMI can confirm it for you.<br><br>If you&#x27;d like a custom playlist for [Business Name], or want to talk about a partnership, just reply here and we&#x27;ll set it up.
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--gold);letter-spacing:1px;">→ Click to load into Compose</div>
+  </div>
+  <div class="card" style="cursor:pointer;" onclick="loadTemplate('book-launch')">
+    <h2>🚣 Book Announcement — Row Row Ocean</h2>
+    <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-top:8px;">Send to families, schools and partners when the book is available.</p>
+    <div style="margin-top:14px;padding:14px;background:var(--bg);border-radius:var(--radius);font-size:13px;line-height:1.8;color:var(--white);">
+      Subject: Row Row Ocean Is Here!<br><br>The day is here! Row Row Ocean, the first New Thought Nursery picture book, is now available.<br><br>A little rowboat, glowing jellyfish and a sky full of stars. It&#x27;s the song your little ones already love, now a story you can hold and read at bedtime.<br><strong>[Button: Get Row Row Ocean]</strong><br><br>Thank you for singing along with us.
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--gold);letter-spacing:1px;">→ Click to load into Compose</div>
+  </div>
+  <div class="card" style="cursor:pointer;" onclick="loadTemplate('partner')">
+    <h2>🤝 Partner / Collaboration Inquiry</h2>
+    <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-top:8px;">For pediatric offices, parenting blogs, kids&#x27; brands and event organizers.</p>
+    <div style="margin-top:14px;padding:14px;background:var(--bg);border-radius:var(--radius);font-size:13px;line-height:1.8;color:var(--white);">
+      Subject: A Collaboration Idea — New Thought Nursery<br><br>I create New Thought Nursery, children&#x27;s songs that turn the classic nursery rhymes into safe, positive stories. I think our audiences overlap, and I&#x27;d love to explore working together.<br><br>A few ideas:<br>• A sing-along at your next family event<br>• A themed playlist for your space or channel<br>• A giveaway of the Row Row Ocean picture book<br><br>You can get a feel for the music here:<br><strong>[Button: Watch on YouTube]</strong><br><br>Would you be open to a short call next week?
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--gold);letter-spacing:1px;">→ Click to load into Compose</div>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab-followup">
+  <div class="note">
+    <strong>Follow-Up Templates</strong> — directors are busy; a friendly second note is often the one that gets read.
+  </div>
+  <div class="card" style="cursor:pointer;" onclick="loadTemplate('followup-1')">
+    <h2>👋 Follow-Up #1 — One Week Later</h2>
+    
+    <div style="margin-top:14px;padding:14px;background:var(--bg);border-radius:var(--radius);font-size:13px;line-height:1.8;color:var(--white);">
+      Subject: Did the Kids Get to Hear It?<br><br>Just checking in to see if your teachers had a chance to try the New Thought Nursery playlist.<br><br>If it helps, these are short, easy songs for the moments that are hardest to manage: clean-up, lining up and settling down for nap.<br><strong>[Button: Play the Playlist]</strong>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--gold);letter-spacing:1px;">→ Click to load into Compose</div>
+  </div>
+  <div class="card" style="cursor:pointer;" onclick="loadTemplate('new-release')">
+    <h2>🎶 New Song Release</h2>
+    <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-top:8px;">Share a new song with your contact list.</p>
+    <div style="margin-top:14px;padding:14px;background:var(--bg);border-radius:var(--radius);font-size:13px;line-height:1.8;color:var(--white);">
+      Subject: New Song: [Song Title]<br><br>A new New Thought Nursery song just came out: [Song Title].<br><br>[One sentence about what the song teaches or the story it tells.]<br><strong>[Button: Listen Now]</strong><br><br>If your little ones have a favorite, I&#x27;d love to hear about it.
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--gold);letter-spacing:1px;">→ Click to load into Compose</div>
+  </div>
+  <div class="card" style="cursor:pointer;" onclick="loadTemplate('thank-you')">
+    <h2>💛 Thank You After a Visit</h2>
+    <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-top:8px;">After a story time, school visit or event.</p>
+    <div style="margin-top:14px;padding:14px;background:var(--bg);border-radius:var(--radius);font-size:13px;line-height:1.8;color:var(--white);">
+      Subject: Thank You for Having Us!<br><br>Thank you for welcoming New Thought Nursery to [Place]! It was a joy singing with your little ones.<br><br>The full playlist is always free to stream:<br><strong>[Button: Keep Singing]</strong><br><br>If you enjoyed it, a quick note I can share as a testimonial would mean a lot. And if you know another center or library that would love a visit, please send them my way.
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--gold);letter-spacing:1px;">→ Click to load into Compose</div>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab-settings">
+  <div class="card">
+    <h2>Email Signature Settings</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6;">This signature appears at the bottom of every email you send. Customize it below.</p>
+    <div class="row-2">
+      <div class="field"><label class="lbl">Your Full Name</label><input type="text" class="inp" id="sigName" value="Starrah Hazely Parsons"></div>
+      <div class="field"><label class="lbl">Your Title</label><input type="text" class="inp" id="sigTitle" value="Songwriter & Creator"></div>
+    </div>
+    <div class="row-2">
+      <div class="field"><label class="lbl">Phone (optional)</label><input type="text" class="inp" id="sigPhone" placeholder="(555) 000-0000"></div>
+      <div class="field"><label class="lbl">Website</label><input type="text" class="inp" id="sigWeb" value="childrens.iqproductionz.com"></div>
+    </div>
+    <div class="field"><label class="lbl">Tagline / Sign-off line (optional)</label><input type="text" class="inp" id="sigTagline" placeholder="e.g. What they sing, they bring."></div>
+    <button class="btn btn-gold" style="margin-top:16px;width:auto;padding:11px 28px;" onclick="updateSigPreview()">Update Preview</button>
+    <div class="sig-preview" id="sigPreview" style="margin-top:16px;">
+      <div class="sig-name">Starrah Hazely Parsons</div>
+      <div class="sig-title">Songwriter &amp; Creator</div>
+      <div class="sig-link">childrens.iqproductionz.com</div>
+      <div style="margin-top:4px;font-size:11px;color:var(--muted);">New Thought Nursery · Conscious Rhymes for Little Minds</div>
+    </div>
+  </div>
+</div>
+
+</div><script>
+const EJS_SERVICE  = 'service_ywpr4l1';
+const EJS_TEMPLATE_DEFAULT = 'template_nnmxioq';
+
+// ── TAB SWITCHING ──
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+// ── TEMPLATE LOADER ──
+// WHY JSON: generated from one list so the cards and the loaded text never drift apart.
+const TEMPLATES = {
+  "daycare-intro": {
+    "subject": "Free Songs for Circle Time — New Thought Nursery",
+    "body": "I'm the songwriter behind New Thought Nursery, a collection of children's songs for little minds. We take the classic nursery tunes kids already know and rewrite them with safe, gentle scenarios, plus new original songs.\n\nThey work well for circle time, transitions and nap time. Your teachers can stream the full playlist free on YouTube:\n#BUTTON:Play the Playlist|https://youtube.com/playlist?list=PLKe0i8vjcVZU&si=JjsldiCYAmrYq3DS\n\nI'd love to hear which songs your little ones like best. Would it be okay if I sent you new releases as they come out?"
+  },
+  "library": {
+    "subject": "A Sing-Along Story Time Idea — Row Row Ocean",
+    "body": "I write children's music as New Thought Nursery, and my first picture book, Row Row Ocean, is coming soon. It's a song you can read: a little rowboat drifting past coral islands and glowing jellyfish under the stars.\n\nI'd love to offer a sing-along story time at [Library / Store Name]. It runs about [length], works for ages [age range], and everything is gentle and calm.\n\nYou can hear the music here:\n#BUTTON:Listen to New Thought Nursery|https://youtube.com/playlist?list=PLKe0i8vjcVZU&si=JjsldiCYAmrYq3DS\n\nWould a date in [month] work for your schedule?"
+  },
+  "licensing": {
+    "subject": "Playing New Thought Nursery at [Business Name]",
+    "body": "Thank you for your interest in playing New Thought Nursery for your families!\n\nMy songs are registered with BMI, so businesses that already hold a BMI public-performance license are generally covered. If you're not sure whether you have one, BMI can confirm it for you.\n\nIf you'd like a custom playlist for [Business Name], or want to talk about a partnership, just reply here and we'll set it up."
+  },
+  "book-launch": {
+    "subject": "Row Row Ocean Is Here!",
+    "body": "The day is here! Row Row Ocean, the first New Thought Nursery picture book, is now available.\n\nA little rowboat, glowing jellyfish and a sky full of stars. It's the song your little ones already love, now a story you can hold and read at bedtime.\n#BUTTON:Get Row Row Ocean|[link to order page]\n\nThank you for singing along with us."
+  },
+  "partner": {
+    "subject": "A Collaboration Idea — New Thought Nursery",
+    "body": "I create New Thought Nursery, children's songs that turn the classic nursery rhymes into safe, positive stories. I think our audiences overlap, and I'd love to explore working together.\n\nA few ideas:\n• A sing-along at your next family event\n• A themed playlist for your space or channel\n• A giveaway of the Row Row Ocean picture book\n\nYou can get a feel for the music here:\n#BUTTON:Watch on YouTube|https://www.youtube.com/@NewThoughtNursery\n\nWould you be open to a short call next week?"
+  },
+  "followup-1": {
+    "subject": "Did the Kids Get to Hear It?",
+    "body": "Just checking in to see if your teachers had a chance to try the New Thought Nursery playlist.\n\nIf it helps, these are short, easy songs for the moments that are hardest to manage: clean-up, lining up and settling down for nap.\n#BUTTON:Play the Playlist|https://youtube.com/playlist?list=PLKe0i8vjcVZU&si=JjsldiCYAmrYq3DS"
+  },
+  "new-release": {
+    "subject": "New Song: [Song Title]",
+    "body": "A new New Thought Nursery song just came out: [Song Title].\n\n[One sentence about what the song teaches or the story it tells.]\n#BUTTON:Listen Now|[song link]\n\nIf your little ones have a favorite, I'd love to hear about it."
+  },
+  "thank-you": {
+    "subject": "Thank You for Having Us!",
+    "body": "Thank you for welcoming New Thought Nursery to [Place]! It was a joy singing with your little ones.\n\nThe full playlist is always free to stream:\n#BUTTON:Keep Singing|https://youtube.com/playlist?list=PLKe0i8vjcVZU&si=JjsldiCYAmrYq3DS\n\nIf you enjoyed it, a quick note I can share as a testimonial would mean a lot. And if you know another center or library that would love a visit, please send them my way."
+  }
+};
+
+function loadTemplate(key){
+  const t = TEMPLATES[key];
+  if(!t) return;
+  document.getElementById('emailSubject').value = t.subject;
+  document.getElementById('messageBody').value = t.body;
+  // Switch to compose tab
+  document.querySelectorAll('.tab').forEach((el,i) => el.classList.toggle('active', i===0));
+  document.querySelectorAll('.tab-panel').forEach((el,i) => el.classList.toggle('active', i===0));
+  window.scrollTo({top:0,behavior:'smooth'});
+  showStatus('ok','Template loaded — customize it before sending!');
+}
+
+// ── GREETING ──
+const DEFAULT_GREETING = 'Salutations';
+// Returns the chosen greeting. WHY one function: preview, test and real sends must match.
+function getGreeting(){
+  const sel = document.getElementById('greetingSelect').value;
+  if(sel === '__none') return '';
+  if(sel === '__custom') return document.getElementById('greetingCustom').value.trim() || DEFAULT_GREETING;
+  return sel;
+}
+// Full opening line, e.g. "Salutations Marcus," or "Salutations," when no name is given.
+function greetingLine(name){
+  const g = getGreeting();
+  if(!g) return '';
+  return name ? g + ' ' + name + ',' : g + ',';
+}
+// WHY escape: names are typed text and must not break the page or email HTML.
+function escHtml(v){ return String(v).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function updateGreetingPreview(){
+  const line = greetingLine(document.getElementById('clientName').value.trim());
+  document.getElementById('greetingPreview').innerHTML = '<span>Opens with</span>' +
+    (line ? escHtml(line) : '<em style="color:#6E6896;font-family:Nunito,sans-serif;font-size:12px;">(no greeting, starts with your message)</em>');
+}
+window.addEventListener('load', function(){
+  // WHY live preview: shows the exact opening line before sending.
+  document.getElementById('clientName').addEventListener('input', updateGreetingPreview);
+  document.getElementById('greetingCustom').addEventListener('input', updateGreetingPreview);
+  document.getElementById('greetingSelect').addEventListener('change', function(){
+    const c = document.getElementById('greetingCustom');
+    c.hidden = this.value !== '__custom';
+    if(!c.hidden) c.focus();
+    updateGreetingPreview();
+  });
+  updateGreetingPreview();
+});
+
+// ── FORMAT TOOLBAR ──
+// Wraps the highlighted text in <b> or <i>. WHY HTML tags: the message box already passes
+// basic HTML straight into the email, so this needs no extra conversion step.
+// With nothing highlighted, it inserts an empty pair and puts the cursor inside it.
+function wrapSelection(tag){
+  const ta = document.getElementById('messageBody');
+  const s = ta.selectionStart, e = ta.selectionEnd;
+  const sel = ta.value.slice(s, e);
+  // WHY require a highlight: clicking with nothing selected looked like the button did nothing.
+  if(!sel){ flashFmt('Highlight the text first, then click ' + (tag === 'b' ? 'B' : 'I') + '.'); return; }
+  const open = '<' + tag + '>', close = '</' + tag + '>';
+  ta.value = ta.value.slice(0, s) + open + sel + close + ta.value.slice(e);
+  ta.focus();
+  // WHY reposition: keeps typing flow natural — inside the tags if empty, after them if not.
+  const pos = s + open.length + sel.length + close.length;
+  ta.selectionStart = ta.selectionEnd = pos;
+  flashFmt((tag === 'b' ? 'Bold' : 'Italic') + ' added.');
+}
+
+// Turns the highlighted lines into a bulleted (ul) or numbered (ol) list.
+// WHY one line of HTML: the email builder turns every line break into <br>, which would
+// add blank gaps between list items. WHY inline styles: most email apps strip <style> blocks.
+function makeList(type){
+  const ta = document.getElementById('messageBody');
+  let s = ta.selectionStart, e = ta.selectionEnd;
+  if(s === e){ flashFmt('Highlight the lines for your list first, then click ' + (type === 'ol' ? '1. List' : '• List') + '.'); return; }
+  // WHY expand to full lines: a highlight that starts mid-line should still take the whole line.
+  s = ta.value.lastIndexOf('\n', s - 1) + 1;
+  const nl = ta.value.indexOf('\n', e > s ? e - 1 : e);
+  e = nl === -1 ? ta.value.length : nl;
+  const lines = ta.value.slice(s, e).split('\n')
+    .map(l => l.replace(/^\s*([•✦\-*]|\d+[.)])\s*/, '').trim())  // drop typed bullets/numbers
+    .filter(Boolean);
+  const items = lines.length ? lines : ['List item'];
+  const html = '<' + type + ' style="margin:0 0 14px 22px;padding:0;">' +
+    items.map(l => '<li style="margin:0 0 6px;">' + l + '</li>').join('') +
+    '</' + type + '>';
+  ta.value = ta.value.slice(0, s) + html + ta.value.slice(e);
+  ta.focus();
+  ta.selectionStart = ta.selectionEnd = s + html.length;
+  flashFmt((type === 'ol' ? 'Numbered' : 'Bulleted') + ' list added (' + items.length + ' items).');
+}
+
+// Short confirmation under the box. WHY: the box shows code, so people need a visible "it worked"; use Preview in Window to see the final look.
+let fmtTimer;
+function flashFmt(msg){
+  const el = document.getElementById('fmtFlash');
+  el.textContent = msg;
+  clearTimeout(fmtTimer);
+  fmtTimer = setTimeout(() => { el.textContent = ''; }, 4000);
+}
+
+// Keyboard shortcuts. WHY: Ctrl/Cmd+B and +I are what people expect from any editor.
+window.addEventListener('load', function(){
+  document.getElementById('messageBody').addEventListener('keydown', function(ev){
+    if(!(ev.ctrlKey || ev.metaKey)) return;
+    const k = ev.key.toLowerCase();
+    if(k === 'b' || k === 'i'){ ev.preventDefault(); wrapSelection(k); }
+  });
+});
+
+// ── HYPERLINK BUILDER ──
+function insertHyperlink(){
+  const text = document.getElementById('linkText').value.trim();
+  const url  = document.getElementById('linkUrl').value.trim();
+  if(!text || !url){ alert('Please fill in both the link text and URL.'); return; }
+  const ta = document.getElementById('messageBody');
+  const insert = `<a href="${url}">${text}</a>`;
+  const s = ta.selectionStart, e = ta.selectionEnd;
+  ta.value = ta.value.slice(0,s) + insert + ta.value.slice(e);
+  ta.selectionStart = ta.selectionEnd = s + insert.length;
+  ta.focus();
+  document.getElementById('linkText').value = '';
+  document.getElementById('linkUrl').value = '';
+}
+
+// ── BUTTON BUILDER ──
+function insertButton(){
+  const text = document.getElementById('btnText').value.trim();
+  const url  = document.getElementById('btnUrl').value.trim();
+  if(!text || !url){ alert('Please fill in both the button text and URL.'); return; }
+  const ta = document.getElementById('messageBody');
+  const s = ta.selectionStart;
+  const insert = `\n#BUTTON:${text}|${url}\n`;
+  ta.value = ta.value.slice(0,s) + insert + ta.value.slice(s);
+  ta.focus();
+  document.getElementById('btnText').value = '';
+  document.getElementById('btnUrl').value = '';
+}
+
+// ── SIGNATURE PREVIEW ──
+function updateSigPreview(){
+  const n  = document.getElementById('sigName').value || 'Starrah Hazely Parsons';
+  const ti = document.getElementById('sigTitle').value || '';
+  const ph = document.getElementById('sigPhone').value || '';
+  const w  = document.getElementById('sigWeb').value || '';
+  const tg = document.getElementById('sigTagline').value || '';
+  document.getElementById('sigPreview').innerHTML = `
+    <div class="sig-name">${n}</div>
+    ${ti?`<div class="sig-title">${ti}</div>`:''}
+    ${ph?`<div style="font-size:12px;color:var(--muted)">${ph}</div>`:''}
+    ${w?`<div class="sig-link">${w}</div>`:''}
+    <div style="margin-top:4px;font-size:11px;color:var(--muted);">New Thought Nursery · Conscious Rhymes for Little Minds</div>
+    ${tg?`<div style="font-size:12px;color:var(--gold-dim);font-style:italic;margin-top:4px;">${tg}</div>`:''}
+  `;
+}
+
+// ── EMAIL HTML BUILDER ──
+function buildEmailHtml(clientName, rawContent){
+  const sigName    = document.getElementById('sigName').value || 'Starrah Hazely Parsons';
+  const sigTitle   = document.getElementById('sigTitle').value || 'Songwriter & Creator';
+  const sigPhone   = document.getElementById('sigPhone').value || '';
+  const sigWeb     = document.getElementById('sigWeb').value || 'childrens.iqproductionz.com';
+  const sigTagline = document.getElementById('sigTagline').value || '';
+  const consultantEmail = document.getElementById('consultantEmail').value || 'newthoughtnursery@gmail.com';
+
+  // Process content: line breaks → <br>, #BUTTON tags → gold buttons, preserve HTML
+  let body = rawContent
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')  // escape HTML chars in plain text
+    .replace(/\n/g,'<br>');
+
+  // Undo escaping for real HTML tags users may have typed (we allow <a>, <b>, <strong>, <em>, <u>)
+  body = rawContent; // Use raw – let basic HTML pass through for power users
+  // WHY: a line break right after a list adds an extra blank gap in the email.
+  body = body.replace(/\n/g,'<br>').replace(/(<\/(?:ol|ul)>)<br>/g,'$1');
+
+  // Process #BUTTON:text|url
+  body = body.replace(/#BUTTON:([^|]+)\|([^\n<]+)/g, (_, btnTxt, btnUrl) =>
+    `<br><div style="text-align:center;margin:22px 0;">` +
+    `<a href="${btnUrl.trim()}" style="display:inline-block;padding:13px 32px;background:linear-gradient(135deg,#2E2466,#4A3D96);color:#FFFFFF;text-decoration:none;font-family:'Fraunces',Georgia,serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:6px;">${btnTxt.trim()}</a>` +
+    `</div><br>`
+  );
+
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito:wght@300;400;600;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;padding:0;background:#F4EEFB;font-family:'Nunito',Arial,sans-serif;}
+.wrap{max-width:600px;margin:0 auto;background:#FFFFFF;border-radius:10px;overflow:hidden;box-shadow:0 6px 32px rgba(46,36,102,0.15);}
+.email-hdr{background:linear-gradient(160deg,#E6F4FA 0%,#FBEAF1 55%,#EAF6EE 100%);padding:32px 40px;text-align:center;border-bottom:2px solid #2E2466;position:relative;}
+.email-hdr::after{content:'';display:block;width:60px;height:2px;background:linear-gradient(90deg,transparent,#2E2466,transparent);margin:14px auto 0;}
+
+.email-body{padding:36px 40px;background:#FFFFFF;}
+.greeting{font-family:'Fraunces',Georgia,serif;font-size:22px;color:#2E2466;font-weight:400;margin:0 0 6px;}
+.gold-line{width:40px;height:1px;background:linear-gradient(90deg,#2E2466,#C2578A);margin:0 0 20px;}
+.content{font-size:14px;color:#2E2466;line-height:1.9;margin:0 0 24px;}
+.sig-block{border-top:1px solid #E4DDF2;margin-top:32px;padding-top:24px;}
+.sig-name{font-family:'Fraunces',Georgia,serif;font-size:17px;color:#2E2466;font-weight:600;margin:0 0 2px;}
+.sig-title{font-size:11px;color:#6E6896;letter-spacing:1px;text-transform:uppercase;margin:0 0 6px;}
+.sig-link{font-size:12px;color:#2E2466;text-decoration:none;}
+.email-ftr{background:#FDFBF6;padding:16px 40px;text-align:center;font-size:11px;color:#8A82B8;letter-spacing:1px;border-top:1px solid #E4DDF2;}
+.email-ftr a{color:#C2578A;text-decoration:none;transition:color .2s ease;} .email-ftr a:hover{color:#fff;} .content a{color:#1F8584;text-decoration:none;border-bottom:1px solid rgba(46,36,102,0.4);} .content a:hover{color:#C2578A;}
+@media(max-width:600px){.email-body{padding:24px 20px;}.email-hdr{padding:24px 20px;}}
+
+  /* ATTACHMENT INPUT */
+  .attach-label {
+    display:flex; align-items:center; gap:10px; cursor:pointer;
+    border:1.5px dashed var(--gold-dim); border-radius:8px;
+    padding:10px 14px; font-size:.9rem; color:var(--gold);
+    background:rgba(46,36,102,0.05); transition:all .2s;
+    user-select:none;
+  }
+  .attach-label:hover { border-color:var(--gold); background:rgba(46,36,102,0.1); }
+  .attach-icon { font-size:1.2rem; }
+  .attach-clear {
+    display:inline-block; margin-top:6px; padding:4px 10px;
+    background:none; border:1px solid #c0392b; border-radius:4px;
+    color:#c0392b; font-size:.78rem; cursor:pointer; transition:all .2s;
+  }
+  .attach-clear:hover { background:#c0392b; color:#fff; }
+
+</style></head>
+<body><div style="padding:20px 16px;background:#F4EEFB;">
+<div class="wrap">
+<div class="email-hdr">
+  <div style="max-width:420px;margin:0 auto;text-align:left;"><img src="https://childrens.iqproductionz.com/Assets/butterfly.png" alt="" style="height:52px;width:auto;display:block;margin:0 auto 4px;"><img src="https://childrens.iqproductionz.com/Assets/wordmark.png" alt="New Thought Nursery — Conscious Rhymes for Little Minds" style="width:100%;height:auto;display:block;"></div>
+</div>
+<div class="email-body">
+  ${greetingLine(clientName) ? `<p class="greeting">${escHtml(greetingLine(clientName))}</p>
+  <div class="gold-line"></div>` : ''}
+  <div class="content">${body}</div>
+  <div class="sig-block">
+    <div class="sig-name">${sigName}</div>
+    <div class="sig-title">${sigTitle}</div>
+    ${sigPhone?`<div style="font-size:12px;color:#6E6896;margin-bottom:2px;">${sigPhone}</div>`:''}
+    <a href="https://${sigWeb}" class="sig-link">${sigWeb}</a>
+    <div style="font-size:11px;color:#8A82B8;margin-top:6px;">New Thought Nursery &bull; Conscious Rhymes for Little Minds</div>
+    ${sigTagline?`<div style="font-size:12px;color:#8A82B8;font-style:italic;margin-top:4px;">${sigTagline}</div>`:''}
+  </div>
+</div>
+<div class="email-ftr"><div style="font-family:'Dancing Script',cursive;font-size:18px;color:#1F8584;letter-spacing:0;margin-bottom:6px;">What they sing, they bring — what they hum, they become…</div>New Thought Nursery &bull; <a href="https://childrens.iqproductionz.com" style="color:#C2578A;text-decoration:none;">childrens.iqproductionz.com</a> &bull; <a href="https://www.youtube.com/@NewThoughtNursery" style="color:#C2578A;text-decoration:none;">YouTube</a> &bull; <a href="mailto:${consultantEmail}" style="color:#C2578A;text-decoration:none;">${consultantEmail}</a></div>
+</div></div></body></html>`;
+}
+
+// ── PREVIEW ──
+function previewEmail(){
+  const clientName = document.getElementById('clientName').value.trim();
+  const recs       = document.getElementById('messageBody').value.trim() || '(Your message will appear here)';
+  const html       = buildEmailHtml(clientName, recs);
+  const win = window.open('','_blank','width=700,height=800,scrollbars=yes');
+  win.document.write(html);
+  win.document.close();
+}
+
+// ── SEND ──
+async function sendEmail(mode){
+  const templateId      = EJS_TEMPLATE_DEFAULT; // WHY: hardcoded — template never changes
+  const clientEmail     = document.getElementById('clientEmail').value.trim();
+  const clientName      = document.getElementById('clientName').value.trim();
+  const subject         = document.getElementById('emailSubject').value.trim();
+  const recs            = document.getElementById('messageBody').value.trim();
+  const consultantEmail = document.getElementById('consultantEmail').value.trim();
+
+  if(mode==='client'){
+    if(!clientEmail||!clientEmail.includes('@')){ showStatus('err','Please enter a valid client email.'); return; }
+  }
+  if(!recs){ showStatus('err','Please write your message before sending.'); return; }
+
+  const sendTo   = mode==='test' ? consultantEmail : clientEmail;
+  const nameFor  = mode==='test' ? (clientName ? clientName + ' (TEST)' : '(TEST)') : clientName;
+  const subjectL = mode==='test' ? '[TEST] ' + subject : subject;
+
+  const btn = document.getElementById(mode==='test' ? 'testBtn' : 'sendBtn');
+  btn.textContent = 'Sending…'; btn.disabled = true;
+
+  const html = buildEmailHtml(nameFor, recs);
+
+  /* WHY: Log params before send so we can diagnose template variable mismatches */
+  console.log('Sending via EmailJS:', {service: EJS_SERVICE, template: templateId, to: sendTo, subject: subjectL});
+
+  /* WHY: use sendForm if attachment present — only sendForm can carry files */
+  const attachFile = document.getElementById('attachFile');
+  const hasFile    = attachFile && attachFile.files && attachFile.files.length > 0;
+
+  /* Build a hidden form for sendForm when attachment is needed */
+  async function doSend(toEmail, subj, msgHtml, replyTo, fromName) {
+    if (hasFile) {
+      const frm = document.createElement('form');
+      frm.style.display = 'none';
+      const fields = {
+        to_email: toEmail, to_name: nameFor, subject: subj,
+        message: msgHtml, reply_to: replyTo, from_name: fromName
+      };
+      for (const [k,v] of Object.entries(fields)) {
+        const inp = document.createElement('input');
+        inp.name = k; inp.value = v; frm.appendChild(inp);
+      }
+      // Clone the file input into the form
+      const fileClone = attachFile.cloneNode(true);
+      fileClone.name = 'my_file';
+      frm.appendChild(fileClone);
+      document.body.appendChild(frm);
+      const result = await emailjs.sendForm(EJS_SERVICE, templateId, frm, { publicKey: EJS_PUBLIC_KEY });
+      document.body.removeChild(frm);
+      return result;
+    } else {
+      return await emailjs.send(EJS_SERVICE, templateId, {
+        to_email: toEmail, to_name: nameFor, subject: subj,
+        message: msgHtml, reply_to: replyTo, from_name: fromName
+      }, { publicKey: EJS_PUBLIC_KEY });
+    }
+  }
+
+  try {
+    await doSend(sendTo, subjectL, html, consultantEmail,
+                 document.getElementById('sigName').value || 'Starrah Hazely Parsons');
+    /* old send call replaced — kept for reference:
+    await emailjs.send(EJS_SERVICE, templateId, {
+      to_email:  sendTo, to_name: nameFor, subject: subjectL,
+      message:   html, reply_to: consultantEmail,
+      from_name: document.getElementById('sigName').value || 'Starrah Hazely Parsons'
+    }); */
+
+    // Consultant copy on real sends
+
+    const msg = mode==='test'
+      ? '✓ Test email sent to ' + consultantEmail + '! Check your inbox.'
+      : '✓ Email sent to ' + clientName + ' (' + clientEmail + ')!';
+    showStatus('ok', msg);
+  } catch(e){
+    console.error(e);
+    const why = (e.text||e.message||JSON.stringify(e));
+    const tooBig = e.status === 413 || /size|large|limit/i.test(why);
+    showStatus('err', tooBig
+      ? 'Send failed: the attachment is too large for your EmailJS plan. Try an MP3 or a Google Drive link instead.'
+      : 'Send failed: ' + why);
+  }
+
+  btn.textContent = mode==='test' ? 'Send Test to Me' : 'Send →';
+  btn.disabled = false;
+}
+
+function showStatus(type, msg){
+  const el = document.getElementById('statusMsg');
+  el.className = 'status ' + type;
+  el.textContent = msg;
+  el.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// WHY a size limit: EmailJS caps attachment size per plan, and WAV files are large
+// (about 10 MB per minute). Set this to your EmailJS plan's attachment limit.
+const MAX_ATTACH_MB = 0.05;  // free plan: 50 KB per send
+
+// Shows the chosen file name and size, and warns before sending when it's too big.
+// WHY warn here instead of at send: you learn right away and can switch to a share link.
+function updateAttachName(input) {
+  var label = document.getElementById('attachFileName');
+  var clear = document.getElementById('attachClear');
+  var warn  = document.getElementById('attachWarn');
+  if (input.files && input.files.length) {
+    var f  = input.files[0];
+    var mb = f.size / 1048576;
+    label.textContent = f.name + ' (' + (mb < 1 ? Math.max(1, Math.round(f.size/1024)) + ' KB' : mb.toFixed(1) + ' MB') + ')';
+    clear.style.display = 'inline-block';
+    if (mb > MAX_ATTACH_MB) {
+      warn.hidden = false;
+      var lim = MAX_ATTACH_MB < 1 ? Math.round(MAX_ATTACH_MB*1000) + ' KB' : MAX_ATTACH_MB + ' MB';
+      warn.textContent = 'This file is over ' + lim + ' and will likely be rejected. For full songs, export an MP3, or upload to Google Drive and add the link with the Hyperlink Builder.';
+    } else { warn.hidden = true; }
+  } else {
+    label.textContent = 'Choose file to attach (songs, PDFs, images)…';
+    clear.style.display = 'none';
+    warn.hidden = true;
+  }
+}
+function clearAttach() {
+  var input = document.getElementById('attachFile');
+  input.value = '';
+  document.getElementById('attachFileName').textContent = 'Choose file to attach (songs, PDFs, images)…';
+  document.getElementById('attachWarn').hidden = true;
+  document.getElementById('attachClear').style.display = 'none';
+}
+
+</script>
+</body>
+</html>
