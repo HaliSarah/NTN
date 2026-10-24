@@ -2,7 +2,7 @@
   Title:        New Thought Nursery — Official Site
   Author:       Hali Sarah Parsons (I.Q. Productionz)
   Date:         2026-10-22
-  Modified By:  Claude (Anthropic), for Hali Sarah Parsons
+  Modified By:  Claude (Anthropic), for Hali Sarah Parsons — 2026-10-24: music buttons link to /Links/ and the Row Row Ocean song page
   Description:  Single-page site for New Thought Nursery, "Conscious Rhymes for Little Minds".
                 Self-contained: all images are embedded as data URIs so the file can be hosted
                 anywhere (GitHub Pages, Netlify) without a separate assets folder.
@@ -85,8 +85,8 @@ main,header,footer{position:relative;z-index:1}
 /* ---- Header ---------------------------------------------------------------- */
 header{padding-block:2.5rem 1rem;text-align:center}
 .brand{width:min(46rem,100%);margin-inline:auto}
-/* Butterfly: lower-left wing (11.5% in from the image edge) lines up with the start of the "u" in Thought (39.4% across the wordmark) */
-.flutter{--bw:min(150px,28vw);width:var(--bw);margin:0 0 -.4rem calc(39.4% - var(--bw) * .115 + 3px);opacity:.9;display:block;
+/* Butterfly: lower-left wing (11.5% in from the image edge) lines up with the start of the "u" in Thought (39.4% across the wordmark), nudged 3px more right per Hali */
+.flutter{--bw:min(150px,28vw);width:var(--bw);margin:0 0 -.4rem calc(39.4% - var(--bw) * .115 + 18px);opacity:.9;display:block;
   /* WHY gentle float: the butterfly is the brand mark; slow motion reads as alive, not busy */
   animation:float 6s ease-in-out infinite}
 @keyframes float{50%{transform:translateY(-8px) rotate(-2deg)}}
@@ -1157,7 +1157,7 @@ footer{background:var(--night);color:#BDB3E6;padding-block:1rem 3rem;border-top:
   <p class="tagline">What they sing, they bring —<br>what they hum, they become…</p>
   <p class="lede">Classic songs re-written with safe scenarios, and new, original compositions for babies, toddlers and the grown-ups who sing along.</p>
   <div class="btns">
-    <a class="btn solid" href="https://youtube.com/playlist?list=PLKe0i8vjcVZU&amp;si=JjsldiCYAmrYq3DS" target="_blank" rel="noopener">
+    <a class="btn solid" href="Links/">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Play the music</a>
     <a class="btn" href="https://www.youtube.com/@NewThoughtNursery" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .6 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .4-4.8 31 31 0 0 0-.4-4.8zM9.7 15.1V8.9L15.5 12z"/></svg>Watch the videos</a>
@@ -1190,7 +1190,7 @@ footer{background:var(--night);color:#BDB3E6;padding-block:1rem 3rem;border-top:
         <p class="byline">By Starrah Hazely Parsons</p>
         <p>A little rowboat drifts past coral islands and glowing jellyfish under a sky full of stars. The song becomes a story you can hold, read and sing at bedtime.</p>
         <div class="btns" style="justify-content:flex-start">
-          <a class="btn" href="https://youtube.com/playlist?list=PLKe0i8vjcVZU&amp;si=JjsldiCYAmrYq3DS" target="_blank" rel="noopener">Hear the song first</a>
+          <a class="btn" href="Music/Row-Row-Ocean/">Hear the song first</a>
         </div>
       </div>
     </div>

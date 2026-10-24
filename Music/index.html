@@ -48,8 +48,9 @@ body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;backg
 /* Shared logo header — same values as the Contact page (.chead) so all pages match. */
 .mark{display:block;width:min(30rem,100%);margin-inline:auto;text-decoration:none}
 .mark:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
-/* Butterfly: lower-left wing lines up with the start of the "u" in Thought (39.4% across) */
-.flutter{--bw:min(100px,24vw);width:var(--bw);margin:0 0 -.15rem calc(39.4% - var(--bw) * .115 + 3px);opacity:.9;display:block;
+/* Butterfly: lower-left wing lines up with the start of the "u" in Thought (39.4% across), nudged 3px more right per Hali.
+   Same 150px size as the homepage butterfly. */
+.flutter{--bw:min(150px,28vw);width:var(--bw);margin:0 0 -.4rem calc(39.4% - var(--bw) * .115 + 6px);opacity:.9;display:block;
   animation:float 6s ease-in-out infinite}
 @keyframes float{50%{transform:translateY(-8px) rotate(-2deg)}}
 .wordmark{width:min(30rem,100%);height:auto;display:block;margin-inline:auto}
@@ -80,6 +81,8 @@ body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;backg
 .back{display:inline-block;margin-top:.9rem;font-weight:700;color:var(--ink);font-size:.95rem}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
+/* Song list: butterfly 4 left, 4 up (4px per nudge) per Hali */
+.flutter{margin-left:calc(39.4% - var(--bw) * .115 - 10px);margin-bottom:calc(16px - .4rem)}
 .songs{list-style:none;margin:0;padding:0}
 .songs a{display:flex;align-items:center;gap:.85rem;padding:.55rem .6rem;margin-bottom:.5rem;border-radius:.9rem;
   color:#fff;text-decoration:none;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);transition:background .15s ease}
@@ -93,7 +96,7 @@ body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;backg
 </head>
 <body>
 <header class="top">
-  <a class="mark" href="../" aria-label="New Thought Nursery home"><img class="flutter" src="../Assets/butterfly.png" alt=""><svg class="wordmark" viewBox="70 252 660 102" role="img" aria-label="New Thought Nursery"><g>
+  <a class="mark" href="../" aria-label="New Thought Nursery home"><img class="flutter" src="https://childrens.iqproductionz.com/Assets/butterfly.png" alt=""><svg class="wordmark" viewBox="70 252 660 102" role="img" aria-label="New Thought Nursery"><g>
 	<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="76.0791" y1="282.4541" x2="720.9609" y2="282.4541">
 		<stop  offset="0" style="stop-color:#345EA9"/>
 		<stop  offset="0.0115" style="stop-color:#365DA8"/>

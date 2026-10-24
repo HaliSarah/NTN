@@ -48,8 +48,9 @@ body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;backg
 /* Shared logo header — same values as the Contact page (.chead) so all pages match. */
 .mark{display:block;width:min(30rem,100%);margin-inline:auto;text-decoration:none}
 .mark:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
-/* Butterfly: lower-left wing lines up with the start of the "u" in Thought (39.4% across) */
-.flutter{--bw:min(100px,24vw);width:var(--bw);margin:0 0 -.15rem calc(39.4% - var(--bw) * .115 + 3px);opacity:.9;display:block;
+/* Butterfly: lower-left wing lines up with the start of the "u" in Thought (39.4% across), nudged 3px more right per Hali.
+   Same 150px size as the homepage butterfly. */
+.flutter{--bw:min(150px,28vw);width:var(--bw);margin:0 0 -.4rem calc(39.4% - var(--bw) * .115 + 6px);opacity:.9;display:block;
   animation:float 6s ease-in-out infinite}
 @keyframes float{50%{transform:translateY(-8px) rotate(-2deg)}}
 .wordmark{width:min(30rem,100%);height:auto;display:block;margin-inline:auto}
@@ -83,7 +84,7 @@ body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;backg
 </head>
 <body>
 <header class="top">
-  <a class="mark" href="../" aria-label="New Thought Nursery home"><img class="flutter" src="../Assets/butterfly.png" alt=""><svg class="wordmark" viewBox="70 252 660 102" role="img" aria-label="New Thought Nursery"><g>
+  <a class="mark" href="../" aria-label="New Thought Nursery home"><img class="flutter" src="https://childrens.iqproductionz.com/Assets/butterfly.png" alt=""><svg class="wordmark" viewBox="70 252 660 102" role="img" aria-label="New Thought Nursery"><g>
 	<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="76.0791" y1="282.4541" x2="720.9609" y2="282.4541">
 		<stop  offset="0" style="stop-color:#345EA9"/>
 		<stop  offset="0.0115" style="stop-color:#365DA8"/>
@@ -983,13 +984,13 @@ body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;backg
 </header>
 <main class="band"><div class="col">
   <p class="eyebrow">Listen</p>
-  <a class="lk hero" href="../Music/"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5h12v2H3zm0 6h12v2H3zm0 6h8v2H3zm14-3V4h4v2h-2v10.5a2.5 2.5 0 1 1-2-2.45z"/></svg><span>All Songs</span></a>
+  <a class="lk hero" href="../Music/"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5h12v2H3zm0 6h12v2H3zm0 6h8v2H3zm14-3V4h4v2h-2v10.5a2.5 2.5 0 1 1-2-2.45z"/></svg><span>Browse the Songs</span></a>
   <a class="lk spotify" href="https://open.spotify.com/artist/5lBDvcJaFh2c6KLmAkLvQ2" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5a10.5 10.5 0 1 0 0 21 10.5 10.5 0 0 0 0-21zm4.8 15.2a.65.65 0 0 1-.9.2c-2.5-1.5-5.6-1.9-9.3-1a.65.65 0 1 1-.3-1.3c4-.9 7.5-.5 10.3 1.2.3.2.4.6.2.9zm1.3-2.9a.82.82 0 0 1-1.1.3c-2.8-1.7-7.1-2.2-10.5-1.2a.82.82 0 1 1-.5-1.6c3.8-1.2 8.6-.6 11.8 1.4.4.2.5.7.3 1.1zm.1-3c-3.4-2-9-2.2-12.2-1.2a1 1 0 1 1-.6-1.9c3.7-1.1 9.9-.9 13.8 1.4a1 1 0 0 1-1 1.7z"/></svg><span>Spotify</span></a>
   <a class="lk ytm" href="https://music.youtube.com/playlist?list=PLKe0i8vjcVZU" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5a10.5 10.5 0 1 0 0 21 10.5 10.5 0 0 0 0-21zm0 16.6a6.1 6.1 0 1 1 0-12.2 6.1 6.1 0 0 1 0 12.2zm0-11a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8zM10 15V9l5 3z"/></svg><span>YouTube Music</span></a>
   <a class="lk yt" href="https://www.youtube.com/playlist?list=PLKe0i8vjcVZU" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span>YouTube Playlist</span></a>
   <a class="lk yt" href="https://www.youtube.com/@NewThoughtNursery" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .6 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .4-4.8 31 31 0 0 0-.4-4.8zM9.7 15.1V8.9L15.5 12z"/></svg><span>YouTube Channel</span></a>
   <p class="eyebrow">More</p>
-  <a class="lk " href="../#book"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 3h11a3 3 0 0 1 3 3v15H7a2 2 0 0 1-2-2zm2 14v2h10v-2z"/></svg><span>Row Row Ocean — picture book</span></a>
+  <a class="lk " href="../Music/Row-Row-Ocean/"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 3h11a3 3 0 0 1 3 3v15H7a2 2 0 0 1-2-2zm2 14v2h10v-2z"/></svg><span>Row Row Ocean</span></a>
   <a class="lk " href="../"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></svg><span>Website</span></a>
   <a class="lk " href="../Contact/"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.2L4 7.3V17h16V7.3z"/></svg><span>Contact &amp; bookings</span></a>
   <p class="foot">Music by Starrah Hazely Parsons · © 2026 I.Q. Productionz<br><a href="mailto:newthoughtnursery@gmail.com">newthoughtnursery@gmail.com</a></p>
