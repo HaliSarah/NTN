@@ -48,9 +48,10 @@ body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;backg
 /* Shared logo header — same values as the Contact page (.chead) so all pages match. */
 .mark{display:block;width:min(30rem,100%);margin-inline:auto;text-decoration:none}
 .mark:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
-/* Butterfly: lower-left wing lines up with the start of the "u" in Thought (39.4% across), nudged 3px more right per Hali.
-   Same 150px size as the homepage butterfly. */
-.flutter{--bw:min(150px,28vw);width:var(--bw);margin:0 0 -.4rem calc(39.4% - var(--bw) * .115 + 6px);opacity:.9;display:block;
+/* Butterfly: ONE position for every page, in % of the logo width so it lands in the same
+   spot on every page and every screen size (31.25% wide = 150px on a 480px logo;
+   -1.65% = Hali's approved nudge). Change it here only. */
+.flutter{width:31.25%;margin:0 0 calc(16px - .4rem) calc(39.4% - 31.25% * .115 - 1.65%);opacity:.9;display:block;
   animation:float 6s ease-in-out infinite}
 @keyframes float{50%{transform:translateY(-8px) rotate(-2deg)}}
 .wordmark{width:min(30rem,100%);height:auto;display:block;margin-inline:auto}
@@ -91,8 +92,6 @@ body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;backg
 .back{display:inline-block;margin-top:.9rem;font-weight:700;color:var(--ink);font-size:.95rem}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-/* Song list: butterfly 4 left, 4 up (4px per nudge) per Hali */
-.flutter{margin-left:calc(39.4% - var(--bw) * .115 - 10px);margin-bottom:calc(16px - .4rem)}
 .songs{list-style:none;margin:0;padding:0}
 .songs a{display:flex;align-items:center;gap:.85rem;padding:.55rem .6rem;margin-bottom:.5rem;border-radius:.9rem;
   color:#fff;text-decoration:none;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);transition:background .15s ease}
