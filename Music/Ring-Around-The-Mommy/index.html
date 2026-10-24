@@ -42,7 +42,7 @@ body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;backg
   /* WHY washes: echoes the flyer's watercolor bleed without loading an image */
   background-image:radial-gradient(30rem 20rem at 0% 0%,color-mix(in srgb,var(--sky) 60%,transparent),transparent 70%),
     radial-gradient(28rem 20rem at 100% 10%,color-mix(in srgb,var(--blush) 50%,transparent),transparent 70%)}
-.top{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;
+.top{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;
   padding:2rem max(16px,env(safe-area-inset-left)) 1.5rem}
 .top > .mark{margin-bottom:.5rem}
 /* Shared logo header — same values as the Contact page (.chead) so all pages match. */
@@ -58,13 +58,15 @@ body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;backg
 .tag{font:600 1.35rem/1.2 var(--f-script);color:var(--teal);margin:.2rem 0 0}
 .sub{color:var(--ink-soft);font-size:.92rem;margin:.35rem 0 0}
 /* Bottom-heavy: the dark band holds every button and grows to fill the lower page. */
-.band{background:var(--night);color:var(--card-blush);position:relative;padding:3.25rem 0 2.5rem}
+/* WHY band grows (not the header): extra height goes to the dark bottom, never empty space up top */
+.band{flex:1;background:var(--night);color:var(--card-blush);position:relative;padding:3.25rem 0 2.5rem}
 .band::before{content:"";position:absolute;inset:-1px 0 auto;height:34px;background:var(--paper);
   -webkit-mask:radial-gradient(24px 18px at 50% 0,#000 98%,transparent) 0 0/48px 34px repeat-x;
           mask:radial-gradient(24px 18px at 50% 0,#000 98%,transparent) 0 0/48px 34px repeat-x}
 .col{max-width:30rem;margin-inline:auto;padding-inline:max(16px,env(safe-area-inset-left)) max(16px,env(safe-area-inset-right))}
 .eyebrow{font:700 .72rem/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--card-mint);margin:1.5rem 0 .7rem;text-align:center}
 .eyebrow:first-child{margin-top:0}
+.choose{font:700 1.45rem/1.2 var(--f-display);color:#fff;text-align:center;margin:0 0 1rem}
 .lk{display:flex;align-items:center;gap:.75rem;padding:.95rem 1.15rem;margin-bottom:.7rem;border-radius:1rem;
   background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.2);color:#fff;text-decoration:none;font-weight:700;
   transition:transform .15s ease,background .15s ease}
@@ -78,13 +80,21 @@ body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;backg
 .foot{text-align:center;font-size:.8rem;color:#BDB3E6;margin-top:1.75rem}
 .foot a{color:#fff}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.topnav{display:flex;justify-content:flex-end;gap:.5rem;padding:.75rem max(16px,env(safe-area-inset-right)) 0 max(16px,env(safe-area-inset-left))}
+/* WHY top-right pills: Home and Contact stay one tap away on every page without
+   competing with the platform buttons in the band below. */
+.topnav a{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem .9rem;border-radius:999px;
+  background:rgba(255,255,255,.75);border:1px solid #E4DDF2;color:var(--ink);font-weight:700;font-size:.9rem;text-decoration:none}
+.topnav a:hover{background:#fff}
+.topnav a:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+.topnav svg{width:1rem;height:1rem}
 .back{display:inline-block;margin-top:.9rem;font-weight:700;color:var(--ink);font-size:.95rem}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-/* Song pages only: butterfly nudged 5 left and 4 up (4px per nudge) per Hali,
+/* Song pages only: butterfly nudged 2 left and 4 up (4px per nudge) per Hali,
    which also opens space between the butterfly and the logo text. */
-.flutter{margin-left:calc(39.4% - var(--bw) * .115 - 14px);margin-bottom:calc(16px - .4rem)}
-.art{width:min(12rem,52vw);margin-top:1.25rem;aspect-ratio:1;border-radius:1.1rem;object-fit:cover;display:block;
+.flutter{margin-left:calc(39.4% - var(--bw) * .115 - 2px);margin-bottom:calc(16px - .4rem)}
+.art{width:min(12rem,52vw);height:auto;margin-top:1.25rem;aspect-ratio:1;border-radius:1.1rem;object-fit:cover;display:block;
   box-shadow:0 20px 40px -20px rgba(43,37,86,.6);background:#e9e4f7}
 .top .name{margin-top:1rem}
 .nav{display:flex;gap:.6rem;margin-top:1.25rem}
@@ -95,6 +105,10 @@ body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;backg
 </style>
 </head>
 <body>
+<nav class="topnav" aria-label="Site">
+  <a href="../../"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></svg><span>Home</span></a>
+  <a href="../../Contact/"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.2L4 7.3V17h16V7.3z"/></svg><span>Contact</span></a>
+</nav>
 <header class="top">
   <a class="mark" href="../../" aria-label="New Thought Nursery home"><img class="flutter" src="https://childrens.iqproductionz.com/Assets/butterfly.png" alt=""><svg class="wordmark" viewBox="70 252 660 102" role="img" aria-label="New Thought Nursery"><g>
 	<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="76.0791" y1="282.4541" x2="720.9609" y2="282.4541">
