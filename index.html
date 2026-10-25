@@ -2,7 +2,7 @@
   Title:        New Thought Nursery — Official Site
   Author:       Hali Sarah Parsons (I.Q. Productionz)
   Date:         2026-10-22
-  Modified By:  Claude (Anthropic), for Hali Sarah Parsons — 2026-10-24: music buttons link to /Links/ and the Row Row Ocean song page
+  Modified By:  Claude (Anthropic), for Hali Sarah Parsons — 2026-10-24: music buttons link to /Links/ and the Row Row Ocean song page; Activity sheets button
   Description:  Single-page site for New Thought Nursery, "Conscious Rhymes for Little Minds".
                 Self-contained: all images are embedded as data URIs so the file can be hosted
                 anywhere (GitHub Pages, Netlify) without a separate assets folder.
@@ -180,6 +180,9 @@ footer{background:var(--night);color:#BDB3E6;padding-block:1rem 3rem;border-top:
 .band .btn.solid{background:var(--card-mint);border-color:var(--card-mint);color:var(--night)}
 .band .btn:focus-visible{outline-color:var(--card-mint)}
 .band p,.aud ul,footer,footer small{color:var(--card-blush)}
+/* Bottom band buttons: card colors so they read as part of the same pastel set */
+.band .btn.sheets{background:#FFF6CB;border-color:#FFF6CB;color:var(--night)}
+.band .btn.yt{background:#DDF2F9;border-color:#DDF2F9;color:var(--night)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
@@ -1216,9 +1219,13 @@ footer{background:var(--night);color:#BDB3E6;padding-block:1rem 3rem;border-top:
         </article>
       </div>
       <div class="btns" style="justify-content:flex-start;margin-top:2rem">
-        <a class="btn solid" href="https://www.youtube.com/@NewThoughtNursery" target="_blank" rel="noopener">Subscribe on YouTube</a>
+        <a class="btn sheets" href="Teachers/">Activity sheets</a>
+        <a class="btn yt" href="https://www.youtube.com/@NewThoughtNursery" target="_blank" rel="noopener">Subscribe on YouTube</a>
         <a class="btn" href="Contact/">Get in touch</a>
       </div>
+    </div>
+  </div>
+</main>
 
 
 <footer>
