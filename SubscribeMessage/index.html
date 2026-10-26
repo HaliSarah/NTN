@@ -2,10 +2,11 @@
   Title:        New Thought Nursery | Thanks for Subscribing
   Author:       Hali Sarah Parsons (I.Q. Productionz)
   Date:         2026-10-25
-  Modified By:  Claude (Anthropic), for Hali Sarah Parsons
+  Modified By:  Claude (Anthropic), for Hali Sarah Parsons — 2026-10-26: subscribe notification email
   Description:  Thank-you page the "Subscribe" button in NTN Mailchimp emails opens.
                 Uses the same Home/Contact header as the Links and Music pages so it feels like the site.
-                Mailchimp records who clicked the button; this page only says thank you.
+                When opened from the Email Studio button (?email=&name=), it emails newthoughtnursery@gmail.com
+                that this person subscribed (once per browser), then hides the details from the address bar.
 -->
 <!doctype html>
 <html lang="en">
@@ -1042,5 +1043,46 @@ body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;backg
   <a class="lk yt" href="https://www.youtube.com/@NewThoughtNursery" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .6 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .4-4.8 31 31 0 0 0-.4-4.8zM9.7 15.1V8.9L15.5 12z"/></svg><span>Watch on YouTube</span></a>
   <p class="foot">Music by Starrah Hazely Parsons · © 2026 I.Q. Productionz<br><a href="mailto:newthoughtnursery@gmail.com">newthoughtnursery@gmail.com</a></p>
 </div></main>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js"></script>
+<script>
+/* New-subscriber notice → newthoughtnursery@gmail.com.
+   WHY EmailJS: the site has no server; this is the same service the contact form uses. */
+(function(){
+  const EJS = { service:'service_ywpr4l1', template:'template_nnmxioq', key:'3vNjQbWmqzzOO6IK-' };
+  const NTN_INBOX = 'newthoughtnursery@gmail.com';
+  const q = new URLSearchParams(location.search);
+  const email = (q.get('email') || '').trim();
+  const name = (q.get('name') || '').trim();
+  // WHY bail out: visitors who arrive without the button's details have nothing to report.
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return;
+  // WHY hide the query: keeps their email out of the address bar and out of shared links.
+  try{ history.replaceState(null, '', location.pathname); }catch(e){}
+  // WHY a per-browser flag: refreshing or reopening the email shouldn't send you duplicate notices.
+  const KEY = 'ntn-sub-' + email.toLowerCase();
+  try{ if(localStorage.getItem(KEY)) return; }catch(e){}
+  // WHY escape: name/email come from a link and go into an HTML email.
+  const esc = v => String(v).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const when = new Date().toLocaleString('en-US', { timeZone:'America/Chicago' });
+  const html = '<p><strong>New subscriber</strong></p>' +
+    '<p><strong>Name:</strong> ' + (name ? esc(name) : '(not given)') + '<br>' +
+    '<strong>Email:</strong> ' + esc(email) + '<br>' +
+    '<strong>When:</strong> ' + esc(when) + ' (Central)</p>' +
+    '<p>They clicked "Subscribe for New Songs" in one of your emails.</p>';
+  function send(){
+    // WHY try/catch: a failed notice must never break the thank-you page for the visitor.
+    try{
+      emailjs.send(EJS.service, EJS.template, {
+        to_email: NTN_INBOX, to_name: 'New Thought Nursery',
+        subject: 'New subscriber: ' + (name || email),
+        message: html, reply_to: email, from_name: name || email
+      }, { publicKey: EJS.key }).then(function(){
+        try{ localStorage.setItem(KEY, '1'); }catch(e){}
+      }, function(err){ console.error('Subscribe notice failed', err); });
+    }catch(e){ console.error(e); }
+  }
+  // WHY wait for load: the EmailJS library must finish downloading first.
+  if(window.emailjs) send(); else window.addEventListener('load', send);
+})();
+</script>
 </body>
 </html>

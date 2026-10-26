@@ -3,7 +3,7 @@
   Title:       NTN Email Studio — New Thought Nursery Branded Email Sender
   Author:      Hali Sarah Parsons
   Date:        2026-10-22
-  Modified By: Claude (Anthropic) — 2026-10-26: optional Kit (ConvertKit) "Subscribe" button above the signature
+  Modified By: Claude (Anthropic) — 2026-10-26: optional "Subscribe" button above the signature → /SubscribeMessage/ (notifies newthoughtnursery@gmail.com)
   Description: Private tool for sending branded New Thought Nursery emails via EmailJS
                (same service as the I.Q. Productionz sender). Rebranded to the watercolor
                nursery palette with outreach templates for daycares, libraries and partners.
@@ -432,8 +432,14 @@ textarea.inp{resize:vertical;min-height:200px;line-height:1.7;}
 </div><script>
 const EJS_SERVICE  = 'service_ywpr4l1';
 const EJS_TEMPLATE_DEFAULT = 'template_nnmxioq';
-// WHY a constant: change the Kit signup link in one place if you make a new form.
-const KIT_SUBSCRIBE_URL = 'https://cheerful-experimenter-6562.kit.com/c5c450ca76';
+// WHY our own page: one click subscribes them and emails you, with no third-party form.
+const SUBSCRIBE_PAGE = 'https://childrens.iqproductionz.com/SubscribeMessage/';
+// Builds the button link with the recipient's name + email so the thank-you page knows who clicked.
+// WHY encodeURIComponent: names/emails can contain spaces, + or & that would break the link.
+function subscribeLink(name){
+  const em = (document.getElementById('clientEmail').value || '').trim();
+  return SUBSCRIBE_PAGE + '?email=' + encodeURIComponent(em) + '&name=' + encodeURIComponent(name || '');
+}
 
 // ── TAB SWITCHING ──
 function switchTab(name){
@@ -708,7 +714,7 @@ body{margin:0;padding:0;background:#F4EEFB;font-family:'Nunito',Arial,sans-serif
   <div class="gold-line"></div>` : ''}
   <div class="content">${body}</div>
   ${document.getElementById('includeSubscribe') && document.getElementById('includeSubscribe').checked ? `<div style="text-align:center;margin:26px 0 6px;">
-    <a href="${KIT_SUBSCRIBE_URL}" style="display:inline-block;padding:13px 30px;background:#2E2466;background:linear-gradient(135deg,#2E2466,#4A3D96);color:#FFFFFF;text-decoration:none;font-family:'Fraunces',Georgia,serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:6px;">Subscribe for New Songs</a>
+    <a href="${subscribeLink(clientName)}" style="display:inline-block;padding:13px 30px;background:#2E2466;background:linear-gradient(135deg,#2E2466,#4A3D96);color:#FFFFFF;text-decoration:none;font-family:'Fraunces',Georgia,serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:6px;">Subscribe for New Songs</a>
     <div style="font-size:11px;color:#6E6896;margin-top:8px;">Get new New Thought Nursery songs and activity sheets in your inbox.</div>
   </div>` : ''}
   <div class="sig-block">
