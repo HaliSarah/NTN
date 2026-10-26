@@ -3,7 +3,7 @@
   Title:       NTN Email Studio — New Thought Nursery Branded Email Sender
   Author:      Hali Sarah Parsons
   Date:        2026-10-22
-  Modified By: Claude (Anthropic) — 2026-10-26: Subscribe tab with Kit (ConvertKit) form
+  Modified By: Claude (Anthropic) — 2026-10-26: optional Kit (ConvertKit) "Subscribe" button above the signature
   Description: Private tool for sending branded New Thought Nursery emails via EmailJS
                (same service as the I.Q. Productionz sender). Rebranded to the watercolor
                nursery palette with outreach templates for daycares, libraries and partners.
@@ -178,26 +178,6 @@ textarea.inp{resize:vertical;min-height:200px;line-height:1.7;}
   .attach-clear:hover { background:#c0392b; color:#fff; }
 
 
-/* ---- Kit (ConvertKit) subscribe form ----
-   WHY !important: Kit's script injects inline styles and its own stylesheet,
-   which would otherwise override the brand colors. */
-.formkit-form{max-width:100% !important;background:#FFFFFF !important;border:1px solid #E4DDF2 !important;border-radius:8px !important;padding:24px !important;font-family:'Nunito',system-ui,sans-serif !important;box-shadow:none !important}
-.formkit-form .formkit-header h2,.formkit-form [data-element="header"] h2{font-family:'Fraunces',Georgia,serif !important;color:#2E2466 !important;font-size:20px !important;font-weight:700 !important;margin:0 0 8px !important}
-.formkit-form .formkit-subheader p,.formkit-form [data-element="subheader"] p{color:#6E6896 !important;font-size:14px !important;line-height:1.6 !important}
-/* WHY flex-wrap: fields and button stack cleanly on phones */
-.formkit-form .formkit-fields{display:flex !important;flex-wrap:wrap !important;gap:10px !important}
-.formkit-form .formkit-field{flex:1 1 200px !important;margin:0 !important}
-.formkit-form .formkit-input{width:100% !important;padding:11px 14px !important;border:1px solid #E4DDF2 !important;border-radius:8px !important;background:#FDFBF6 !important;color:#2E2466 !important;font-family:'Nunito',system-ui,sans-serif !important;font-size:14px !important}
-.formkit-form .formkit-input::placeholder{color:#6E6896 !important}
-.formkit-form .formkit-input:focus{outline:none !important;border-color:#2E2466 !important;box-shadow:0 0 0 3px rgba(46,36,102,.15) !important}
-.formkit-form .formkit-submit{flex:0 0 auto !important;background:linear-gradient(135deg,#2E2466,#4A3D96) !important;color:#FFFFFF !important;border:none !important;border-radius:8px !important;padding:12px 22px !important;font-family:'Fraunces',Georgia,serif !important;font-size:12px !important;font-weight:700 !important;letter-spacing:1.5px !important;text-transform:uppercase !important;cursor:pointer !important;margin:0 !important}
-.formkit-form .formkit-submit:hover{background:linear-gradient(135deg,#C2578A,#2E2466) !important}
-/* WHY: Kit paints its own color on the inner span */
-.formkit-form .formkit-submit > span{background:transparent !important;padding:0 !important}
-.formkit-form .formkit-alert-success{background:#E2F5E9 !important;color:#2C6B47 !important;border:none !important;border-radius:8px !important}
-.formkit-form .formkit-alert-error{background:#FDECEA !important;color:#A5332A !important;border:none !important;border-radius:8px !important}
-/* WHY: the "Built with Kit" badge doesn't belong on a private back-end tool */
-.formkit-form .formkit-powered-by-convertkit-container{display:none !important}
 </style>
 </head>
 <body>
@@ -221,7 +201,6 @@ textarea.inp{resize:vertical;min-height:200px;line-height:1.7;}
     <div class="tab" onclick="switchTab('outreach')">📡 Outreach</div>
     <div class="tab" onclick="switchTab('followup')">🔁 Follow-Up</div>
     <div class="tab" onclick="switchTab('settings')">⚙ Signature</div>
-    <div class="tab" onclick="switchTab('subscribe')">✉ Subscribe</div>
   </div>
 </div>
 
@@ -335,6 +314,13 @@ textarea.inp{resize:vertical;min-height:200px;line-height:1.7;}
     <div class="hint" id="attachWarn" hidden></div>
   </div>
 
+  <div class="field" style="margin-bottom:12px;">
+    <label class="lbl" style="display:flex;align-items:center;gap:8px;cursor:pointer;text-transform:none;letter-spacing:0;font-size:13px;">
+      <input type="checkbox" id="includeSubscribe" checked style="width:16px;height:16px;accent-color:#2E2466;">
+      Add a "Subscribe for new songs" button above my signature
+    </label>
+  </div>
+
   <div class="btn-row">
     <button class="btn btn-outline" onclick="previewEmail()">Preview in Window</button>
     <button class="btn btn-test" id="testBtn" onclick="sendEmail('test')">Send Test to Me</button>
@@ -420,17 +406,6 @@ textarea.inp{resize:vertical;min-height:200px;line-height:1.7;}
   </div>
 </div>
 
-<div class="tab-panel" id="tab-subscribe">
-  <div class="note">
-    <strong>Subscribers (Kit)</strong> — add someone to the New Thought Nursery list, or test the signup form. New signups land in your Kit account.
-  </div>
-  <div class="card">
-    <h2>Add a Subscriber</h2>
-    <!-- WHY here: Kit's script draws the form right where this tag sits -->
-    <script async data-uid="c5c450ca76" src="https://cheerful-experimenter-6562.kit.com/c5c450ca76/index.js"></script>
-  </div>
-</div>
-
 <div class="tab-panel" id="tab-settings">
   <div class="card">
     <h2>Email Signature Settings</h2>
@@ -457,6 +432,8 @@ textarea.inp{resize:vertical;min-height:200px;line-height:1.7;}
 </div><script>
 const EJS_SERVICE  = 'service_ywpr4l1';
 const EJS_TEMPLATE_DEFAULT = 'template_nnmxioq';
+// WHY a constant: change the Kit signup link in one place if you make a new form.
+const KIT_SUBSCRIBE_URL = 'https://cheerful-experimenter-6562.kit.com/c5c450ca76';
 
 // ── TAB SWITCHING ──
 function switchTab(name){
@@ -730,6 +707,10 @@ body{margin:0;padding:0;background:#F4EEFB;font-family:'Nunito',Arial,sans-serif
   ${greetingLine(clientName) ? `<p class="greeting">${escHtml(greetingLine(clientName))}</p>
   <div class="gold-line"></div>` : ''}
   <div class="content">${body}</div>
+  ${document.getElementById('includeSubscribe') && document.getElementById('includeSubscribe').checked ? `<div style="text-align:center;margin:26px 0 6px;">
+    <a href="${KIT_SUBSCRIBE_URL}" style="display:inline-block;padding:13px 30px;background:#2E2466;background:linear-gradient(135deg,#2E2466,#4A3D96);color:#FFFFFF;text-decoration:none;font-family:'Fraunces',Georgia,serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:6px;">Subscribe for New Songs</a>
+    <div style="font-size:11px;color:#6E6896;margin-top:8px;">Get new New Thought Nursery songs and activity sheets in your inbox.</div>
+  </div>` : ''}
   <div class="sig-block">
     <div class="sig-name">${sigName}</div>
     <div class="sig-title">${sigTitle}</div>
